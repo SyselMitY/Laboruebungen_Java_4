@@ -1,10 +1,7 @@
 package bezirke;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.TreeSet;
+import java.io.*;
+import java.util.*;
 
 public class PolBezirk implements Comparable<PolBezirk> {
     private int kennzeichen;
@@ -40,8 +37,12 @@ public class PolBezirk implements Comparable<PolBezirk> {
     }
 
     public static Collection<PolBezirk> readCSV(String filename) throws IOException {
-        TreeSet<PolBezirk> bezirke = new TreeSet<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+        return readCSV(PolBezirk.class.getResourceAsStream(filename));
+    }
+
+    public static Collection<PolBezirk> readCSV(InputStream stream) throws IOException {
+        Set<PolBezirk> bezirke = new TreeSet<>();
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream))) {
             while (reader.ready()) {
                 String line = reader.readLine();
                 try {
@@ -65,12 +66,12 @@ public class PolBezirk implements Comparable<PolBezirk> {
 
     public static void main(String[] args) {
         try {
-            TreeSet<PolBezirk> bezirke = (TreeSet<PolBezirk>) readCSV("Labor_01\\src\\main\\resources\\bezirke_noe.csv");
+            List<PolBezirk> bezirke = new ArrayList<>(readCSV("/bezirke_noe.csv"));
             System.out.println("Natürlich sortiert:");
             printBezirke(bezirke);
             System.out.println("\nRückwärts sortiert:");
-            printBezirke(bezirke.descendingSet());
-
+            bezirke.sort(Comparator.comparing(PolBezirk::getEinwohnerzahl).reversed());
+            printBezirke(bezirke);
         } catch (IOException e) {
             System.out.println("Error while reading file: " + e.getLocalizedMessage());
         }
