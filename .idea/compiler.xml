@@ -6,10 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Threads" />
         <module name="Wiederholung" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Threads" target="14.1" />
       <module name="Wiederholung" target="14.1" />
     </bytecodeTargetLevel>
   </component>
