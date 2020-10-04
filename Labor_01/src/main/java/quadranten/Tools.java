@@ -17,7 +17,7 @@ public class Tools {
                 double y = dis.readDouble();
 
                 int calculatedQuadrant = getQuadrant(x, y);
-                System.out.printf("X:%f Y:%f Q:%b\n", x, y, calculatedQuadrant==quadrant);
+                System.out.printf("X:%f Y:%f Q:%b\n", x, y, calculatedQuadrant == quadrant);
                 dos.writeInt(calculatedQuadrant);
                 dos.writeDouble(x);
                 dos.writeDouble(y);
@@ -42,17 +42,31 @@ public class Tools {
     public Collection<Point> getPointsFromQuadrant(InputStream stream, int quadrant) throws IOException {
         Collection<Point> points = new ArrayList<>();
         try (DataInputStream dis = new DataInputStream(stream)) {
-                while (dis.available() >= QUADRANT_ENTRY_SIZE) {
-                    int readQuadrant = dis.readInt();
-                    double x = dis.readDouble();
-                    double y = dis.readDouble();
+            while (dis.available() >= QUADRANT_ENTRY_SIZE) {
+                int readQuadrant = dis.readInt();
+                double x = dis.readDouble();
+                double y = dis.readDouble();
 
-                    Point point = new Point(x, y);
-                    if(point.getQuadrant() == quadrant) {
-                        points.add(point);
-                    }
+                Point point = new Point(x, y);
+                if (point.getQuadrant() == quadrant) {
+                    points.add(point);
                 }
             }
-        return points;
         }
+        return points;
+    }
+
+    public static Collection<Point> getPoints(InputStream stream) throws IOException {
+        Collection<Point> points = new ArrayList<>();
+        try (DataInputStream dis = new DataInputStream(stream)) {
+            while (dis.available() >= QUADRANT_ENTRY_SIZE) {
+                int readQuadrant = dis.readInt();
+                double x = dis.readDouble();
+                double y = dis.readDouble();
+
+                points.add(new Point(x, y));
+            }
+        }
+        return points;
+    }
 }
