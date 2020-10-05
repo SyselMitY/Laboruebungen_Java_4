@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Wordfinder {
+    public static final int PATTERN_LENGTH = 9;
     private final Set<String> words;
 
     public Wordfinder() throws IOException {
@@ -18,7 +19,7 @@ public class Wordfinder {
         try (Stream<String> inputStream = Files.lines(wordsPath)) {
             words = inputStream
                     .parallel()
-                    .filter(word -> word.length() == 9)
+                    .filter(word -> word.length() == PATTERN_LENGTH)
                     .map(String::toLowerCase)
                     .collect(Collectors.toCollection(TreeSet::new));
         }
