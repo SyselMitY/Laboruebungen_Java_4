@@ -4,26 +4,27 @@ public class LeibnitzThread extends Thread {
     private double erg;
     private final int start;
     private final int endInclusive;
+    private boolean finished;
 
-    public LeibnitzThread(int start,int endInclusive) {
-        if(start<0||endInclusive<=start)
+    public LeibnitzThread(int start, int endInclusive) {
+        if (start < 0 || endInclusive <= start)
             throw new IllegalArgumentException("Illegal range");
         this.start = start;
         this.endInclusive = endInclusive;
-        this.erg = -1;
+        this.erg = 0;
+        this.finished = false;
     }
 
     @Override
     public void run() {
-        double calcErg = 0;
         for (int i = start; i <= endInclusive; i++) {
-            calcErg += (Math.pow(-1,i))/(2*i+1);
+            erg += (double) (i % 2 == 0 ? 1 : -1) / (2 * i + 1);
         }
-        erg = calcErg;
+        finished = true;
     }
 
     public double getErg() {
-        if(erg<0)
+        if (!finished)
             throw new IllegalStateException("Thread is not finished yet");
         return erg;
     }

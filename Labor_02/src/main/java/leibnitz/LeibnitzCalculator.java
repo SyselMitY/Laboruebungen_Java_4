@@ -9,14 +9,18 @@ public class LeibnitzCalculator {
     public static void main(String[] args) {
         final int THREAD_COUNT = 7;
         final int RANGE = 99999;
-        final int THREAD_RANGE = (int) ((double) RANGE / THREAD_COUNT);
+        final int THREAD_RANGE = RANGE / THREAD_COUNT;
+        int remainder = RANGE % THREAD_COUNT;
+
+        System.out.println(remainder);
 
         List<LeibnitzThread> threads = new ArrayList<>();
 
+        int startRange;
+        int endRange = -1;
         for (int i = 0; i < THREAD_COUNT; i++) {
-            int startRange = i * (THREAD_RANGE+1);
-            int endRange = Math.min(startRange + (int) Math.ceil((double) RANGE / THREAD_COUNT)-1, RANGE);
-
+            startRange = endRange + 1;
+            endRange = startRange + THREAD_RANGE-1 + (remainder-- < 0 ? 0 : 1);
             LeibnitzThread newThread = new LeibnitzThread(startRange, endRange);
             newThread.setName("Thread-" + i);
             threads.add(newThread);
@@ -27,7 +31,7 @@ public class LeibnitzCalculator {
         joinAll(threads);
 
         double pi = 4 * threads.stream()
-                .mapToDouble(thread -> thread.getErg())
+                .mapToDouble(LeibnitzThread::getErg)
                 .sum();
         System.out.println(pi);
     }
