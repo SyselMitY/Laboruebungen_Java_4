@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Schwimmbad {
+    public static final int FIRST_TICKET_NUMBER = 1;
     private final int maxLiegen;
     private int nextTicketNumber;
     private final List<Badegast> badegäste;
@@ -11,7 +12,7 @@ public class Schwimmbad {
     public Schwimmbad(int maxLiegen) {
         this.maxLiegen = maxLiegen;
         badegäste = new LinkedList<>();
-        this.nextTicketNumber = 1;
+        this.nextTicketNumber = FIRST_TICKET_NUMBER;
     }
 
     public synchronized int enterSchwimmbad(Badegast gast) {
@@ -23,15 +24,16 @@ public class Schwimmbad {
             }
         }
         badegäste.add(gast);
-        System.out.printf("%s betritt Schwimmbad mit Ticket %d ---> %d anwesend\n",gast.getGastName(),nextTicketNumber,getVisitorCount());
+        System.out.printf("%s betritt Schwimmbad mit Ticket %d ---> %d anwesend\n", gast.getGastName(), nextTicketNumber, getVisitorCount());
         return nextTicketNumber++;
     }
 
     public synchronized void leaveSchwimmbad(Badegast badegast) {
         badegäste.remove(badegast);
-        System.out.printf("%s verlässt Schwimmbad ---> %d anwesend\n", badegast.getGastName(),getVisitorCount());
+        System.out.printf("%s verlässt Schwimmbad ---> %d anwesend\n", badegast.getGastName(), getVisitorCount());
         this.notifyAll();
     }
+
 
     public synchronized int getVisitorCount() {
         return badegäste.size();

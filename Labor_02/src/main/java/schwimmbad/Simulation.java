@@ -6,9 +6,12 @@ import java.util.stream.IntStream;
 
 public class Simulation {
 
+    public static final int SCHWIMBAD_HAWARA_ANZAHL = 50;
+    public static final int MAX_LIEGEN = 5;
+
     public static void main(String[] args) {
-        Schwimmbad bad = new Schwimmbad(5);
-        List<Badegast> badegasts = IntStream.rangeClosed(1, 50)
+        Schwimmbad bad = new Schwimmbad(MAX_LIEGEN);
+        List<Badegast> badegasts = IntStream.rangeClosed(1, SCHWIMBAD_HAWARA_ANZAHL)
                 .mapToObj(value -> new Badegast("Badegast_" + value, bad))
                 .collect(Collectors.toList());
         badegasts.forEach(Thread::start);
