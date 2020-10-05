@@ -15,7 +15,9 @@ public class PrimeDaemonThread extends Thread {
     public void run() {
         while (true) {
             System.out.println("Active Checkers: " + PrimeTest.getRunningThreads());
-            System.out.println(primes);
+            synchronized (primes) {
+                System.out.println(primes);
+            }
             try {
                 sleep(REPORT_SLEEP_TIME);
             } catch (InterruptedException e) {

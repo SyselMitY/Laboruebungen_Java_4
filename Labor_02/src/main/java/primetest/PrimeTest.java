@@ -58,7 +58,7 @@ public class PrimeTest implements Runnable {
     public static void main(String[] args) {
         Set<Integer> primes = new TreeSet<>();
         List<Thread> primeThreads =
-                IntStream.range(1, 50)
+                IntStream.range(1, 1000)
                         .mapToObj(value -> new PrimeTest(value, primes))
                         .map(Thread::new)
                         .collect(Collectors.toList());
@@ -71,7 +71,9 @@ public class PrimeTest implements Runnable {
 
         joinAll(primeThreads);
         System.out.println("-----------------------------------------------------------------");
-        System.out.println(primes);
+        synchronized (primes) {
+            System.out.println(primes);
+        }
     }
 
     private static void joinAll(List<Thread> primeThreads) {
