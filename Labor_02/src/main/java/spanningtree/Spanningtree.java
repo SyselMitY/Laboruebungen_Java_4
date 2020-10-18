@@ -1,5 +1,7 @@
 package spanningtree;
 
+import com.sun.source.tree.Tree;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,21 +14,16 @@ public class Spanningtree {
 
     public static void main(String[] args) {
         try {
-            SortedSet<Edge> sortedEdges;
-            Set<Edge> finalEdges = new TreeSet<>();
-            sortedEdges = getEdgesFromFile("./Labor_02/files/network.txt");
-            int[] nodes = IntStream.rangeClosed(0,getBiggestNodeNumber(sortedEdges)).toArray();
+            SortedSet<Edge> sortedEdges = getEdgesFromFile("./Labor_02/files/network_krass.txt");
+            int[] nodes = IntStream.rangeClosed(0, getBiggestNodeNumber(sortedEdges)).toArray();
+            Set<Edge> finalEdges;
 
-            for (Edge edge : sortedEdges) {
-                int region1 = nodes[edge.getNode1()];
-                int region2 = nodes[edge.getNode2()];
-                if (region1 != region2) {
-                    uniteRegions(nodes,region1,region2);
-                    finalEdges.add(edge);
-                }
-            }
+            int originalWeight = getTotalEdgeWeight(sortedEdges);
+            finalEdges = getMinimalSpanningTree(sortedEdges, nodes);
+            int finalWeight = getTotalEdgeWeight(finalEdges);
 
-            System.out.println(finalEdges);
+            System.out.printf("Original: %d\nNew: %d\nSavings: %d", originalWeight, finalWeight, originalWeight - finalWeight);
+
         } catch (IOException e) {
             System.err.println("Fehler beim lesen der Datei:");
             e.printStackTrace();
@@ -34,6 +31,26 @@ public class Spanningtree {
             System.err.println("Fehler in der Matrix:");
             e.printStackTrace();
         }
+    }
+
+    public static int getTotalEdgeWeight(Collection<Edge> edges) {
+        return edges
+                .stream()
+                .mapToInt(Edge::getWeight)
+                .sum();
+    }
+
+    public static Set<Edge> getMinimalSpanningTree(SortedSet<Edge> sortedEdges, int[] nodesWithRegions) {
+        Set<Edge> finalEdges = new TreeSet<>();
+        for (Edge edge : sortedEdges) {
+            int region1 = nodesWithRegions[edge.getNode1()];
+            int region2 = nodesWithRegions[edge.getNode2()];
+            if (region1 != region2) {
+                uniteRegions(nodesWithRegions, region1, region2);
+                finalEdges.add(edge);
+            }
+        }
+        return finalEdges;
     }
 
     private static int getBiggestNodeNumber(Collection<Edge> edges) {
@@ -44,7 +61,7 @@ public class Spanningtree {
                 .orElse(0);
     }
 
-    private static SortedSet<Edge> getEdgesFromFile(String filename) throws IOException  {
+    private static SortedSet<Edge> getEdgesFromFile(String filename) throws IOException {
         SortedSet<Edge> sortedEdges;
         try (Stream<String> inputStream = Files.lines(Path.of(filename))) {
             sortedEdges = inputStream
@@ -61,5 +78,4 @@ public class Spanningtree {
                 nodes[i] = region1;
         }
     }
-
 }

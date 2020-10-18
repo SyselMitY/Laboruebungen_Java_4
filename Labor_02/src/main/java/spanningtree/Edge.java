@@ -1,5 +1,6 @@
 package spanningtree;
 
+import java.util.Comparator;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -19,7 +20,6 @@ public class Edge implements Comparable<Edge> {
             this.node1 = node2;
             this.node2 = node1;
         }
-        System.out.println(this);
     }
 
     public int getWeight() {
@@ -36,7 +36,7 @@ public class Edge implements Comparable<Edge> {
 
     @Override
     public String toString() {
-        return String.format("(%c->%c): %d",node1+'A',node2+'A',weight);
+        return String.format("(%d->%d): %d",node1,node2,weight);
     }
 
     @Override
@@ -56,7 +56,10 @@ public class Edge implements Comparable<Edge> {
 
     @Override
     public int compareTo(Edge o) {
-        return Integer.compare(weight, o.weight);
+        return Comparator.comparing(Edge::getWeight)
+                .thenComparing(Edge::getNode1)
+                .thenComparing(Edge::getNode2)
+                .compare(this,o);
     }
 
     public static Stream<Edge> getEdgeStreamFromMatrixRow(String row, int rowIndex) {
