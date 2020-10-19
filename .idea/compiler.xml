@@ -17,4 +17,9 @@
       <module name="Wiederholung" target="14.1" />
     </bytecodeTargetLevel>
   </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="StreamingAPI" options="--add-exports jdk.internal.vm.compiler/org.graalvm.compiler.phases.common=ALL-UNNAMED" />
+    </option>
+  </component>
 </project>
