@@ -9,10 +9,12 @@
         <module name="Threads" />
         <module name="StreamingAPI" />
         <module name="Wiederholung" />
+        <module name="Synchronisation" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="StreamingAPI" target="14.1" />
+      <module name="Synchronisation" target="14.1" />
       <module name="Threads" target="14.1" />
       <module name="Wiederholung" target="14.1" />
     </bytecodeTargetLevel>

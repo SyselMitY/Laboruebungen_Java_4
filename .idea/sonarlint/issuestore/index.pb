@@ -47,3 +47,9 @@ r
 BLabor_03/src/test/java/schuelerstream/CustomSchuelerUtilsTest.java,3\3\33c15a61333259217e3624f04185c8c46137d605
 n
 >Labor_03/src/main/java/schuelerstream/CustomSchuelerUtils.java,e\4\e466fc55801bdaeeb646f689c8ebd75ca15f1f8a
+`
+0Labor_03/src/main/java/serialisierung/Tools.java,a\c\ac03af7795ba1611a4316bbfa280d200961ba601
+e
+5Labor_03/src/main/java/serialisierung/TrackPoint.java,3\7\3785b562f91188ad2dc75e582b351034e35c9559
+h
+8Labor_03/src/main/java/serialisierung/TrackPointApp.java,d\a\dac940025c12a5e4e5c22536a1f16f646414ca53

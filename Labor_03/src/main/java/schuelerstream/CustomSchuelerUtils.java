@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -81,7 +82,7 @@ public class CustomSchuelerUtils {
     public static Map<String, Long> h_getVornamenCount(Path path) throws IOException {
         try (Stream<Schueler> schuelerStream = getSchuelerStreamFromCsv(path)) {
             return schuelerStream
-                    .collect(Collectors.groupingBy(Schueler::getVorname,Collectors.counting()));
+                    .collect(Collectors.groupingBy(Schueler::getVorname, TreeMap::new,Collectors.counting()));
         }
     }
 
