@@ -40,6 +40,16 @@
             <artifactId>awaitility</artifactId>
             <version>4.0.3</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-graphics</artifactId>
+            <version>13.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>13.0.2</version>
+        </dependency>
     </dependencies>
 
 </project>

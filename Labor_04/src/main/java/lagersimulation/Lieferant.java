@@ -14,8 +14,13 @@ public class Lieferant implements Runnable {
     private final Logger logger;
     private final int minWaitingTime;
     private final int maxWaitingTime;
+    private final Runnable runAfter;
 
     public Lieferant(int numberOfShipments, int minShipmentSize, int maxShipmentSize, Lager lager, Logger logger, int minWaitingTime, int maxWaitingTime) {
+        this(numberOfShipments, minShipmentSize, maxShipmentSize, lager, logger, minWaitingTime, maxWaitingTime, null);
+    }
+
+    public Lieferant(int numberOfShipments, int minShipmentSize, int maxShipmentSize, Lager lager, Logger logger, int minWaitingTime, int maxWaitingTime, Runnable runAfter) {
         this.numberOfShipments = numberOfShipments;
         this.minShipmentSize = minShipmentSize;
         this.maxShipmentSize = maxShipmentSize;
@@ -23,17 +28,18 @@ public class Lieferant implements Runnable {
         this.logger = logger;
         this.maxWaitingTime = maxWaitingTime;
         this.minWaitingTime = minWaitingTime;
+        this.runAfter = runAfter;
     }
 
     @Override
     public void run() {
         lager.registerLieferant(this);
         for (int i = 0; i < numberOfShipments; i++) {
-            int waitingTime = ThreadLocalRandom.current().nextInt(minWaitingTime,maxWaitingTime+1);
+            int waitingTime = ThreadLocalRandom.current().nextInt(minWaitingTime, maxWaitingTime + 1);
             int nextShipmentSize = ThreadLocalRandom.current().nextInt(minShipmentSize, maxShipmentSize + 1);
             try {
                 lager.addCargo(nextShipmentSize);
-                String logline = String.format("Added %dm³ of cargo to the storage (total %dm³)", nextShipmentSize,lager.getOccupiedSpace());
+                String logline = String.format("Added %dm³ of cargo to the storage (total %dm³)", nextShipmentSize, lager.getOccupiedSpace());
                 logger.log(Level.INFO, logline);
                 Thread.sleep(waitingTime);
             } catch (InterruptedException e) {
@@ -41,6 +47,9 @@ public class Lieferant implements Runnable {
             }
         }
         lager.deregisterLieferant(this);
+        if (runAfter != null) {
+            runAfter.run();
+        }
     }
 
     @Override
