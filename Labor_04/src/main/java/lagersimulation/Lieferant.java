@@ -51,22 +51,4 @@ public class Lieferant implements Runnable {
             runAfter.run();
         }
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Lieferant lieferant = (Lieferant) o;
-        return numberOfShipments == lieferant.numberOfShipments &&
-                minShipmentSize == lieferant.minShipmentSize &&
-                maxShipmentSize == lieferant.maxShipmentSize &&
-                maxWaitingTime == lieferant.maxWaitingTime &&
-                minWaitingTime == lieferant.minWaitingTime &&
-                Objects.equals(lager, lieferant.lager);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(numberOfShipments, minShipmentSize, maxShipmentSize, lager, maxWaitingTime, minWaitingTime);
-    }
 }

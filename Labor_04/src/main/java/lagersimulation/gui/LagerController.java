@@ -79,7 +79,7 @@ public class LagerController implements Initializable {
         int capacity = lager.getCapacity();
         progressBar.setProgress(((double) occupiedSpace) / capacity);
 
-        labelAmount.setText(String.format("Lagerstand: %dm³ von %d³ verbraucht", occupiedSpace, capacity));
+        labelAmount.setText(String.format("Lagerstand: %dm³ von %dm³ verbraucht", occupiedSpace, capacity));
     }
 
 

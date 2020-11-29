@@ -73,3 +73,11 @@ e
 5Labor_04/src/main/java/lagersimulation/Lieferant.java,9\4\943e95491b19043d72ad3395a2cead3f00dc5e3b
 f
 6Labor_04/src/main/java/lagersimulation/Simulation.java,0\e\0e5c86c12393166ad1ad7e44ce68dfda7aaa3e45
+r
+BLabor_04/src/main/java/lagersimulation/gui/ConsumerLogHandler.java,e\c\ecdf22befc1957472c199f629f13bd5c6871077b
+o
+?Labor_04/src/main/java/lagersimulation/gui/LagerController.java,d\e\de5e1e88bd6059b85ec427261a25e46c25390fc8
+h
+8Labor_04/src/main/java/lagersimulation/gui/LagerGUI.java,f\3\f3daf744a2fdcf8f2eb22940b57b9970ee9ccfba
+p
+@Labor_04/src/main/java/lagersimulation/gui/LagerGUILauncher.java,1\e\1e8202421d3a404a26ee157ebf8556bfb1945c40

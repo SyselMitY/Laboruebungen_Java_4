@@ -38,13 +38,15 @@ public class Konsument implements Runnable {
                 nextConsumationSize = Math.min(nextConsumationSize, lager.getOccupiedSpace());
             }
 
-            try {
-                lager.removeCargo(nextConsumationSize);
-                String logline = String.format("Removed %dm³ of cargo from the storage (total %dm³)", nextConsumationSize, lager.getOccupiedSpace());
-                logger.log(Level.INFO, logline);
-                Thread.sleep(waitingTime);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            if (nextConsumationSize != 0) {
+                try {
+                    lager.removeCargo(nextConsumationSize);
+                    String logline = String.format("Removed %dm³ of cargo from the storage (total %dm³)", nextConsumationSize, lager.getOccupiedSpace());
+                    logger.log(Level.INFO, logline);
+                    Thread.sleep(waitingTime);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
         lager.deregisterKonsument(this);
