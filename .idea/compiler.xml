@@ -10,9 +10,13 @@
         <module name="StreamingAPI" />
         <module name="Wiederholung" />
         <module name="Synchronisation" />
+        <module name="JDBC_Grundübung" />
+        <module name="Designpatterns" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Designpatterns" target="14" />
+      <module name="JDBC_Grundübung" target="14" />
       <module name="StreamingAPI" target="14.1" />
       <module name="Synchronisation" target="14.1" />
       <module name="Threads" target="14.1" />
