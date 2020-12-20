@@ -12,4 +12,16 @@ public class TreeSetEvent<T> {
         this.timestamp = Instant.now();
         this.info = info;
     }
+
+    public ObservableTreeSet<T> getSource() {
+        return source;
+    }
+
+    public Instant getTimestamp() {
+        return timestamp;
+    }
+
+    public String getInfo() {
+        return info;
+    }
 }
