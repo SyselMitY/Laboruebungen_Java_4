@@ -6,12 +6,12 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Designpatterns" />
         <module name="Threads" />
-        <module name="StreamingAPI" />
         <module name="Wiederholung" />
         <module name="Synchronisation" />
+        <module name="StreamingAPI" />
         <module name="JDBC_Grundübung" />
-        <module name="Designpatterns" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

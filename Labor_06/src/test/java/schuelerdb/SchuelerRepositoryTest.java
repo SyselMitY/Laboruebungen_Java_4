@@ -39,7 +39,7 @@ public class SchuelerRepositoryTest {
     void setUp() throws SQLException, IOException {
         con = DriverManager.getConnection(jdbc_url, jdbc_user, jdbc_pwd);
         rep = new JdbcSchuelerRepository(con);
-        int result = rep.persistSchueler(SchuelerTools.readFromCSV("schueler.csv"));
+        int result = rep.persistSchueler(SchuelerTools.readFromCSV("files/schueler.csv"));
     }
 
     @AfterEach
@@ -49,14 +49,14 @@ public class SchuelerRepositoryTest {
 
     @Test
     void persistSchuelerOk() throws SQLException, IOException {
-        int result = rep.persistSchueler(SchuelerTools.readFromCSV("schueler.csv"));
+        int result = rep.persistSchueler(SchuelerTools.readFromCSV("files/schueler.csv"));
         assertThat(result).isEqualTo(352);
     }
 
     @Test
     void persistSchuelerFail() throws SQLException, IOException {
         assertThatExceptionOfType(SQLException.class).isThrownBy(() ->
-                rep.persistSchueler(SchuelerTools.readFromCSV("schueler_err.csv")) );
+                rep.persistSchueler(SchuelerTools.readFromCSV("files/schueler_err.csv")) );
     }
 
     @Test

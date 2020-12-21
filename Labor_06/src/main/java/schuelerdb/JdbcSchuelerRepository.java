@@ -17,21 +17,22 @@ public class JdbcSchuelerRepository implements SchuelerRepository {
     @Override
     public int persistSchueler(List<Schueler> lst) throws SQLException {
         deleteIfExists();
+        createSchuelerTable();
         int updateCount = 0;
         for (Schueler schueler : lst) {
             updateCount += addSchueler(schueler);
         }
-        return 0;
+        return updateCount;
     }
 
     private void createSchuelerTable() throws SQLException {
         try (Statement statement = connection.createStatement()) {
-            statement.execute("CREATE TABLE schueler(" +
-                    "int katalognummer," +
-                    "varchar(10) klasse," +
-                    "varchar(64) vorname," +
-                    "varchar(64) familienname," +
-                    "varchar(1) geschlecht)");
+            statement.execute("CREATE TABLE schueler (" +
+                    "katalognummer int," +
+                    "klasse varchar(10) ," +
+                    "vorname varchar(64) ," +
+                    "familienname varchar(64) ," +
+                    "geschlecht varchar(1))");
         }
     }
 
@@ -48,15 +49,14 @@ public class JdbcSchuelerRepository implements SchuelerRepository {
             statement.setString(3, schueler.getVorname());
             statement.setString(4, schueler.getFamilienname());
             statement.setString(5, String.valueOf(schueler.getGeschlecht()));
-            statement.execute();
-            return statement.getUpdateCount();
+            return statement.executeUpdate();
         }
     }
 
     @Override
     public int deleteAll() throws SQLException {
         try (Statement statement = connection.createStatement()) {
-            statement.execute("DELETE FROM schueler");
+            statement.executeUpdate("DELETE FROM schueler");
             return statement.getUpdateCount();
         }
     }
@@ -64,9 +64,9 @@ public class JdbcSchuelerRepository implements SchuelerRepository {
     @Override
     public List<Schueler> findSchuelerByKlasse(String klasse) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(
-                "SELECT katalognummer,klasse,vorname,nachname,geschlecht" +
-                        "FROM schueler" +
-                        "WHERE klasse=?")) {
+                "SELECT katalognummer,klasse,vorname,familienname,geschlecht\n" +
+                        "FROM schueler\n" +
+                        "WHERE klasse = ?")) {
             statement.setString(1, klasse);
             statement.execute();
             return getSchuelerFromResultSet(statement.getResultSet());
@@ -89,8 +89,8 @@ public class JdbcSchuelerRepository implements SchuelerRepository {
     @Override
     public List<Schueler> findSchuelerByGeschlecht(char geschlecht) throws SQLException {
         try (PreparedStatement statement = connection.prepareStatement(
-                "SELECT katalognummer,klasse,vorname,nachname,geschlecht" +
-                        "FROM schueler" +
+                "SELECT katalognummer,klasse,vorname,nachname,geschlecht\n" +
+                        "FROM schueler\n" +
                         "WHERE geschlecht=?")) {
             statement.setString(1, String.valueOf(geschlecht));
             statement.execute();
