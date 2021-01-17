@@ -80,4 +80,9 @@ public class Schueler {
     public void setKlasse(String klasse) {
         this.klasse = klasse;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s %d: %s %s (%c)",klasse,katalognummer,vorname,familienname,geschlecht);
+    }
 }

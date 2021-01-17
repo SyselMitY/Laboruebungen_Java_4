@@ -11,10 +11,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.assertj.core.api.Assertions.assertThatIOException;
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class SchuelerRepositoryTest {
@@ -77,4 +77,34 @@ public class SchuelerRepositoryTest {
         List<Schueler> result = rep.findSchuelerByKlasse("1DHIF");
         assertThat(result).isEmpty();
     }
+
+    @Test
+    void findSchuelerByGeschlecht_correctCount() throws SQLException {
+        int count = rep.findSchuelerByGeschlecht('w').size();
+        assertThat(count).isEqualTo(28);
+    }
+
+    @Test
+    void findSchuelerByGeschlecht_nonexistantIsZero() throws SQLException {
+        int count = rep.findSchuelerByGeschlecht('!').size();
+        assertThat(count).isZero();
+    }
+
+    @Test
+    void findSchuelerByGeschlecht_invalidThrows() throws SQLException {
+        assertThatThrownBy(() -> rep.findSchuelerByGeschlecht('\0')).isInstanceOf(SQLException.class);
+    }
+
+    @Test
+    void getKlassen_correctCount() throws SQLException {
+        int count = rep.getKlassen().size();
+        assertThat(count).isEqualTo(14);
+    }
+
+    @Test
+    void getKlass_correctSchuelerCount() throws SQLException {
+        long schuelerCount = rep.getKlassen().get("4CHIF");
+        assertThat(schuelerCount).isEqualTo(22);
+    }
+
 }

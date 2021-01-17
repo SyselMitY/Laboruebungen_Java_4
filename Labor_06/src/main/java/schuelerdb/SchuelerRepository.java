@@ -1,10 +1,11 @@
 package schuelerdb;
 
+import java.io.Closeable;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-public interface SchuelerRepository {
+public interface SchuelerRepository extends Closeable {
     // persisitiert in einer Transaktion alle in lst gespeicherten Schueler.
 
     // Löscht die Tabelle schueler falls sie existiert und erzeugt sie neu
@@ -26,5 +27,5 @@ public interface SchuelerRepository {
 
     // Liefert eine Map, deren Schlüssel die aufsteigenden Klassenzahlen und
     // deren Werte die entsrechenden Schülerzahlen sind.
-    Map<String, Integer> getKlassen() throws SQLException;
+    Map<String, Long> getKlassen() throws SQLException;
 }

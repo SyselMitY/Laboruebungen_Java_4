@@ -1,10 +1,10 @@
 package schuelerdb;
 
+import java.io.Closeable;
+import java.io.IOException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class JdbcSchuelerRepository implements SchuelerRepository {
 
@@ -32,7 +32,8 @@ public class JdbcSchuelerRepository implements SchuelerRepository {
                     "klasse varchar(10) ," +
                     "vorname varchar(64) ," +
                     "familienname varchar(64) ," +
-                    "geschlecht varchar(1))");
+                    "geschlecht varchar(1) ," +
+                    "PRIMARY KEY (katalognummer,klasse))");
         }
     }
 
@@ -63,6 +64,7 @@ public class JdbcSchuelerRepository implements SchuelerRepository {
 
     @Override
     public List<Schueler> findSchuelerByKlasse(String klasse) throws SQLException {
+        delayFürProgessBar(700,3000);
         try (PreparedStatement statement = connection.prepareStatement(
                 "SELECT katalognummer,klasse,vorname,familienname,geschlecht\n" +
                         "FROM schueler\n" +
@@ -88,8 +90,9 @@ public class JdbcSchuelerRepository implements SchuelerRepository {
 
     @Override
     public List<Schueler> findSchuelerByGeschlecht(char geschlecht) throws SQLException {
+        delayFürProgessBar(700,3000);
         try (PreparedStatement statement = connection.prepareStatement(
-                "SELECT katalognummer,klasse,vorname,nachname,geschlecht\n" +
+                "SELECT katalognummer,klasse,vorname,familienname,geschlecht\n" +
                         "FROM schueler\n" +
                         "WHERE geschlecht=?")) {
             statement.setString(1, String.valueOf(geschlecht));
@@ -99,8 +102,9 @@ public class JdbcSchuelerRepository implements SchuelerRepository {
     }
 
     @Override
-    public Map<String, Integer> getKlassen() throws SQLException {
+    public Map<String, Long> getKlassen() throws SQLException {
         try (Statement statement = connection.createStatement()) {
+            delayFürProgessBar(700, 3000);
             statement.execute(
                     "SELECT klasse, COUNT(katalognummer)\n" +
                             "FROM schueler\n" +
@@ -110,13 +114,30 @@ public class JdbcSchuelerRepository implements SchuelerRepository {
         }
     }
 
-    private Map<String, Integer> getKlassenMapFromResultSet(ResultSet resultSet) throws SQLException {
-        Map<String, Integer> klassenMap = new HashMap<>();
+    private void delayFürProgessBar(int min, int max) {
+        try {
+            Thread.sleep(ThreadLocalRandom.current().nextInt(min, max));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Map<String, Long> getKlassenMapFromResultSet(ResultSet resultSet) throws SQLException {
+        Map<String, Long> klassenMap = new TreeMap<>();
         while (resultSet.next()) {
             String klasse = resultSet.getString("klasse");
-            int schueler = resultSet.getInt("COUNT(katalognummer)");
+            long schueler = resultSet.getLong(2);
             klassenMap.put(klasse, schueler);
         }
         return klassenMap;
+    }
+
+    @Override
+    public void close() throws IOException {
+        try {
+            connection.close();
+        } catch (SQLException e) {
+            throw new IOException(e);
+        }
     }
 }
