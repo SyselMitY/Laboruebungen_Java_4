@@ -1,3 +1,6 @@
 
+P
+java:S1128".Remove this unused import 'java.io.Closeable'.(î¤ñœşÿÿÿÿ8èö‘ñ.
+j	java:S100u"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(öÎ¡Ù8×¿Ò‘ñ.
 m
-java:S1192D"PDefine a constant instead of duplicating this literal "FROM schueler\n" 3 times.(Ï¤Õ†8ŸÂ‰§è.
+java:S1192F"PDefine a constant instead of duplicating this literal "FROM schueler\n" 3 times.(Ï¤Õ†8ŸµÜŠñ.
