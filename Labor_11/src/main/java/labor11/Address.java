@@ -6,6 +6,12 @@ import javax.persistence.*;
 @Table(name = "address")
 public class Address {
 
+    public Address(String city, String street, int zip) {
+        this.city = city;
+        this.street = street;
+        this.zip = zip;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "addr_id")
@@ -20,6 +26,6 @@ public class Address {
     @Column(name = "addr_zip")
     private int zip;
 
-    @OneToOne(optional = false,mappedBy = "customer")
+    @OneToOne(optional = false,mappedBy = "address")
     private Customer customer;
 }

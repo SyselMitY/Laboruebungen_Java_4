@@ -1,5 +1,4 @@
-import labor11.Customer;
-import labor11.JPAUtil;
+package labor11;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -9,6 +8,10 @@ public class CustomerRepository implements AutoCloseable {
 
     private CustomerRepository() {
 
+    }
+
+    public static CustomerRepository getINSTANCE() {
+        return INSTANCE;
     }
 
     public boolean persist(Customer customer) {

@@ -5,6 +5,14 @@ import javax.persistence.*;
 @Entity
 @Table(name = "customer")
 public class Customer {
+
+    public Customer(String email, String firstname, String lastname, Address address) {
+        this.email = email;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.address = address;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "cust_Id")
