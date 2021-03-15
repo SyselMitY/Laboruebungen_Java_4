@@ -6,6 +6,9 @@ import javax.persistence.*;
 @Table(name = "address")
 public class Address {
 
+    public Address() {
+    }
+
     public Address(String city, String street, int zip) {
         this.city = city;
         this.street = street;
@@ -26,6 +29,6 @@ public class Address {
     @Column(name = "addr_zip")
     private int zip;
 
-    @OneToOne(optional = false,mappedBy = "address")
+    @OneToOne(mappedBy = "address")
     private Customer customer;
 }

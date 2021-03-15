@@ -6,6 +6,9 @@ import javax.persistence.*;
 @Table(name = "customer")
 public class Customer {
 
+    public Customer() {
+    }
+
     public Customer(String email, String firstname, String lastname, Address address) {
         this.email = email;
         this.firstname = firstname;

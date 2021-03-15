@@ -3,6 +3,13 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="\Labor_11\src\main\java\labor11\JPAUtil.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\Labor_11\src\main\resources\META-INF\persistence.xml">
           <value>
             <Attribute>
