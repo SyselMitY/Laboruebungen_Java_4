@@ -1,4 +1,4 @@
-package labor11;
+package labor11.model;
 
 import javax.persistence.*;
 
@@ -9,7 +9,7 @@ public class Address {
     public Address() {
     }
 
-    public Address(String city, String street, int zip) {
+    public Address(int zip, String street, String city) {
         this.city = city;
         this.street = street;
         this.zip = zip;

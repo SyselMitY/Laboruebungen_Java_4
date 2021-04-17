@@ -7,10 +7,11 @@
         <provider>
             org.hibernate.jpa.HibernatePersistenceProvider
         </provider>
-        <class>labor11.Customer</class>
-        <class>labor11.Address</class>
-        <class>labor11.Book</class>
-        <class>labor11.Publisher</class>
+        <class>labor11.model.Customer</class>
+        <class>labor11.model.Address</class>
+        <class>labor11.model.Book</class>
+        <class>labor11.model.Publisher</class>
+        <class>labor11.model.BookCategory</class>
         <properties>
             <property
                     name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect"/>
