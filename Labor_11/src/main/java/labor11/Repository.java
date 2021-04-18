@@ -12,7 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-public class Repository {
+public class Repository implements AutoCloseable {
     private final static Repository INSTANCE = new Repository();
 
     private Repository() {
@@ -41,6 +41,7 @@ public class Repository {
             tx.commit();
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             if (tx.isActive())
                 tx.rollback();
             return false;
