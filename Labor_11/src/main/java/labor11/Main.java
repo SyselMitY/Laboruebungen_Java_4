@@ -21,6 +21,8 @@ public class Main {
             benutzerList.add(new Benutzer("sossi@soisi.cf", "schlawuxxaschlawuxxy", true));
             benutzerList.add(new Benutzer("katzenheferl@gmail.com", "miaufauch", false));
 
+//            benutzerList.add(new Benutzer("falscheEmail", "PasswortLangGenug", true));
+
             List<Reisetyp> reisetypList = new ArrayList<>();
             reisetypList.add(new Reisetyp("Städtereisen"));
             reisetypList.add(new Reisetyp("Italien"));

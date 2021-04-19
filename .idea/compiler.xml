@@ -13,6 +13,7 @@
         <module name="JDBC_Pi" />
         <module name="JDBC_Grundübung" />
         <module name="StreamingAPI" />
+        <module name="JPA_Uebungen" />
         <module name="Synchronisation" />
         <module name="Designpatterns" />
       </profile>
@@ -22,6 +23,7 @@
       <module name="JDBC_Grundübung" target="14" />
       <module name="JDBC_Pi" target="14" />
       <module name="JPA Mapping" target="14" />
+      <module name="JPA_Uebungen" target="15" />
       <module name="StreamingAPI" target="14.1" />
       <module name="Synchronisation" target="14.1" />
       <module name="Threads" target="14.1" />
