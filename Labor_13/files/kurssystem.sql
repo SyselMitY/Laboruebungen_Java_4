@@ -1,13 +1,13 @@
 /*
  * Datenbank fuer ein Kurssystem
  */
- 
+
  DROP TABLE IF EXISTS kurs_kunde;
  DROP TABLE IF EXISTS kurs;
  DROP TABLE IF EXISTS kurstyp;
  DROP TABLE IF EXISTS dozent;
  DROP TABLE IF EXISTS kunde;
- 
+
 
 
 /*
@@ -55,7 +55,7 @@ INSERT INTO kurstyp (typ_id, typ_bezeichnung) VALUES('W', 'Webtechnologien');
 CREATE TABLE kurs (
   kurs_id 		    serial NOT NULL,
   kurs_typ 		    character(1),  		/* Kurstyp */
-  kurs_doz_id 		    integer,             
+  kurs_doz_id 		    integer,
   kurs_bezeichnung 	    varchar(100),
   kurs_beginndatum          date,
   CONSTRAINT 		    kurs_pkey PRIMARY KEY (kurs_id),
@@ -70,13 +70,13 @@ CREATE TABLE kurs (
  * Daten für 'kurs'
  */
 
-INSERT INTO kurs (kurs_typ, kurs_doz_id, kurs_bezeichnung, kurs_beginndatum) 
+INSERT INTO kurs (kurs_typ, kurs_doz_id, kurs_bezeichnung, kurs_beginndatum)
 VALUES ('P',2 ,'Objektorientierte Programmierung mit Java','2010-08-27');
 INSERT INTO kurs (kurs_typ, kurs_doz_id, kurs_bezeichnung, kurs_beginndatum)
 VALUES ('S',3,'JavaScript','2010-06-29');
 INSERT INTO kurs (kurs_typ, kurs_doz_id, kurs_bezeichnung, kurs_beginndatum)
 VALUES ('P',2,'JDBC','2010-06-30');
-INSERT INTO kurs (kurs_typ, kurs_doz_id, kurs_bezeichnung, kurs_beginndatum) 
+INSERT INTO kurs (kurs_typ, kurs_doz_id, kurs_bezeichnung, kurs_beginndatum)
 VALUES ('W',4,'HTML','2010-07-13');
 INSERT INTO kurs (kurs_typ, kurs_doz_id, kurs_bezeichnung, kurs_beginndatum)
 VALUES ('P',5,'GUI-Programmierung mit Java','2010-10-09');

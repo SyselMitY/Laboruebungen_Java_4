@@ -17,6 +17,27 @@
             </Attribute>
           </value>
         </entry>
+        <entry key="\Labor_13\files\kurssystem.sql">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Labor_13\src\main\java\model\Dozent.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="\Labor_13\src\main\java\model\Kurstyp.java">
+          <value>
+            <Attribute>
+              <option name="separator" value=";" />
+            </Attribute>
+          </value>
+        </entry>
       </map>
     </option>
   </component>
