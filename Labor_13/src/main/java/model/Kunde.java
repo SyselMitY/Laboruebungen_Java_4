@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @NoArgsConstructor
@@ -62,9 +63,9 @@ public class Kunde {
 
         Kunde kunde = (Kunde) o;
 
-        if (kundeId != null ? !kundeId.equals(kunde.kundeId) : kunde.kundeId != null) return false;
-        if (kundeZuname != null ? !kundeZuname.equals(kunde.kundeZuname) : kunde.kundeZuname != null) return false;
-        if (kundeVorname != null ? !kundeVorname.equals(kunde.kundeVorname) : kunde.kundeVorname != null) return false;
+        if (!Objects.equals(kundeId, kunde.kundeId)) return false;
+        if (!Objects.equals(kundeZuname, kunde.kundeZuname)) return false;
+        if (!Objects.equals(kundeVorname, kunde.kundeVorname)) return false;
 
         return true;
     }
