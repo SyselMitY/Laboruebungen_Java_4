@@ -2,18 +2,20 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Designpatterns" />
         <module name="Threads" />
+        <module name="JPA Mapping" />
         <module name="Wiederholung" />
-        <module name="Synchronisation" />
-        <module name="StreamingAPI" />
         <module name="JDBC_Pi" />
         <module name="JDBC_Grundübung" />
-        <module name="JPA Mapping" />
+        <module name="StreamingAPI" />
+        <module name="JPA_Uebungen" />
+        <module name="Synchronisation" />
+        <module name="Designpatterns" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -21,6 +23,7 @@
       <module name="JDBC_Grundübung" target="14" />
       <module name="JDBC_Pi" target="14" />
       <module name="JPA Mapping" target="14" />
+      <module name="JPA_Uebungen" target="15" />
       <module name="StreamingAPI" target="14.1" />
       <module name="Synchronisation" target="14.1" />
       <module name="Threads" target="14.1" />

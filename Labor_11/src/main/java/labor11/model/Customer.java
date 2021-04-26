@@ -1,4 +1,4 @@
-package labor11;
+package labor11.model;
 
 import javax.persistence.*;
 
