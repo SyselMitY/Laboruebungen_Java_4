@@ -7,15 +7,16 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="JPA_Uebungen" />
+        <module name="Designpatterns" />
         <module name="Threads" />
-        <module name="JPA Mapping" />
         <module name="Wiederholung" />
+        <module name="Synchronisation" />
+        <module name="StreamingAPI" />
         <module name="JDBC_Pi" />
         <module name="JDBC_Grundübung" />
-        <module name="StreamingAPI" />
-        <module name="JPA_Uebungen" />
-        <module name="Synchronisation" />
-        <module name="Designpatterns" />
+        <module name="JPA Mapping" />
+        <module name="JPA_Uebungen_2" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -24,6 +25,7 @@
       <module name="JDBC_Pi" target="14" />
       <module name="JPA Mapping" target="14" />
       <module name="JPA_Uebungen" target="15" />
+      <module name="JPA_Uebungen_2" target="15" />
       <module name="StreamingAPI" target="14.1" />
       <module name="Synchronisation" target="14.1" />
       <module name="Threads" target="14.1" />
