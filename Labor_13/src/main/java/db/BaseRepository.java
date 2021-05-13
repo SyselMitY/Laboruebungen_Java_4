@@ -6,18 +6,24 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class BaseRepository<T> {
-    protected Optional<T> findById(Class<T> c, Object id) {
+
+    BaseRepository() {
+
+    }
+
+    Optional<T> findById(Class<T> c, Object id) {
         EntityManager em = JPAUtil.getEMF().createEntityManager();
         return Optional.ofNullable(em.find(c, id));
     }
 
-    protected List<T> findAll(Class<T> c) {
+    List<T> findAll(Class<T> c) {
         EntityManager em = JPAUtil.getEMF().createEntityManager();
-        return em.createQuery("select c from " + c.getSimpleName() + " c", c)
+        final String query = "select c from %s c".formatted(c.getSimpleName());
+        return em.createQuery(query, c)
                 .getResultList();
     }
 
-    protected boolean persist(T t) {
+    boolean persist(T t) {
         EntityManager em = JPAUtil.getEMF().createEntityManager();
         EntityTransaction tx = em.getTransaction();
         try {

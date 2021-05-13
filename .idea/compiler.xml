@@ -25,7 +25,7 @@
       <module name="JDBC_Grundübung" target="14" />
       <module name="JDBC_Pi" target="14" />
       <module name="JPA Mapping" target="14" />
-      <module name="JPA_Uebungen" target="15" />
+      <module name="JPA_Uebungen" target="16" />
       <module name="JPA_Uebungen_2" target="15" />
       <module name="Spring_Employee" target="16" />
       <module name="StreamingAPI" target="14.1" />

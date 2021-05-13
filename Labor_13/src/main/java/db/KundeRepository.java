@@ -6,9 +6,20 @@ import java.util.List;
 import java.util.Optional;
 
 public class KundeRepository extends BaseRepository<Kunde> {
-    public static void main(String[] args) {
+
+
+    private KundeRepository() {
     }
 
+    private static KundeRepository INSTANCE;
+
+    public static KundeRepository getInstance() {
+        if (INSTANCE != null) {
+            INSTANCE = new KundeRepository();
+        }
+        return INSTANCE;
+    }
+    
     public Optional<Kunde> findById(Object id) {
         return super.findById(Kunde.class, id);
     }

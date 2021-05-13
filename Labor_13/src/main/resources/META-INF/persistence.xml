@@ -28,14 +28,6 @@
       <property name="hibernate.c3p0.max_statements" value="50"/>
       <property name="hibernate.c3p0.idle_test_period" value="3000"/>
       <property name="hibernate.enable_lazy_load_no_trans" value="true" />
-      <property name="toplink.jdbc.url" value="jdbc:postgresql://10.128.6.18:5432/db_4chif_21_labor13"/>
-      <property name="toplink.jdbc.driver" value="org.postgresql.Driver"/>
-      <property name="hibernate.connection.url" value="jdbc:postgresql://10.128.6.18:5432/db_4chif_21_labor13"/>
-      <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
-      <property name="openjpa.ConnectionURL" value="jdbc:postgresql://10.128.6.18:5432/db_4chif_21_labor13"/>
-      <property name="openjpa.ConnectionDriverName" value="org.postgresql.Driver"/>
-      <property name="eclipselink.jdbc.url" value="jdbc:postgresql://10.128.6.18:5432/db_4chif_21_labor13"/>
-      <property name="eclipselink.jdbc.driver" value="org.postgresql.Driver"/>
     </properties>
   </persistence-unit>
 </persistence>

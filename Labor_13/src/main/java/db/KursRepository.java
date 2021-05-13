@@ -6,7 +6,17 @@ import java.util.List;
 import java.util.Optional;
 
 public class KursRepository extends BaseRepository<Kurs> {
-    public static void main(String[] args) {
+
+    private KursRepository() {
+    }
+
+    private static KursRepository INSTANCE;
+
+    public static KursRepository getInstance() {
+        if (INSTANCE != null) {
+            INSTANCE = new KursRepository();
+        }
+        return INSTANCE;
     }
 
     public Optional<Kurs> findById(Object id) {

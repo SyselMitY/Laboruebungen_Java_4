@@ -6,7 +6,17 @@ import java.util.List;
 import java.util.Optional;
 
 public class DozentRepository extends BaseRepository<Dozent> {
-    public static void main(String[] args) {
+
+    private DozentRepository() {
+    }
+
+    private static DozentRepository INSTANCE;
+
+    public static DozentRepository getInstance() {
+        if (INSTANCE != null) {
+            INSTANCE = new DozentRepository();
+        }
+        return INSTANCE;
     }
 
     public Optional<Dozent> findById(Object id) {

@@ -6,7 +6,17 @@ import java.util.List;
 import java.util.Optional;
 
 public class KurstypRepository extends BaseRepository<Kurstyp> {
-    public static void main(String[] args) {
+
+    private KurstypRepository() {
+    }
+
+    private static KurstypRepository INSTANCE;
+
+    public static KurstypRepository getInstance() {
+        if (INSTANCE != null) {
+            INSTANCE = new KurstypRepository();
+        }
+        return INSTANCE;
     }
 
     public Optional<Kurstyp> findById(Object id) {
