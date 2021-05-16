@@ -1,5 +1,8 @@
 package db;
 
+import model.Kunde;
+import model.Kurs;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.util.List;
@@ -42,8 +45,7 @@ public abstract class BaseRepository<T> implements AutoCloseable {
         EntityTransaction tx = em.getTransaction();
         try {
             tx.begin();
-            if(!em.contains(t))
-                t = em.merge(t);
+            t = mergeIfNotContained(t, em);
             em.remove(t);
             tx.commit();
             return true;
@@ -57,8 +59,13 @@ public abstract class BaseRepository<T> implements AutoCloseable {
         }
     }
 
+    <T> T mergeIfNotContained(T o, EntityManager em) {
+        return em.contains(o) ? o : em.merge(o);
+    }
+
     @Override
     public void close() throws Exception {
         JPAUtil.close();
     }
+
 }

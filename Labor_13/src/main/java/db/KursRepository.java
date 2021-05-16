@@ -13,7 +13,7 @@ public class KursRepository extends BaseRepository<Kurs> {
     private static KursRepository INSTANCE;
 
     public static KursRepository getInstance() {
-        if (INSTANCE != null) {
+        if (INSTANCE == null) {
             INSTANCE = new KursRepository();
         }
         return INSTANCE;

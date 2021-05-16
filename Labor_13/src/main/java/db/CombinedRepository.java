@@ -6,6 +6,8 @@ import model.Kurs;
 import model.Kurstyp;
 
 import javax.persistence.EntityManager;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class CombinedRepository implements IKurssystemService,AutoCloseable {
@@ -33,7 +35,9 @@ public class CombinedRepository implements IKurssystemService,AutoCloseable {
 
     @Override
     public List<Kunde> getKunden() throws KursDBException {
-        return kundeRepository.findAll();
+        final List<Kunde> list = kundeRepository.findAll();
+        list.sort(Comparator.comparing(Kunde::getKundeId));
+        return list;
     }
 
     @Override
@@ -49,19 +53,30 @@ public class CombinedRepository implements IKurssystemService,AutoCloseable {
             throw new KursDBException();
     }
 
+    public void insertDozent(Dozent dozent) {
+        if(!dozentRepository.persist(dozent))
+            throw new KursDBException();
+    }
+
     @Override
     public List<Dozent> getDozenten() throws KursDBException {
-        return dozentRepository.findAll();
+        final List<Dozent> list = dozentRepository.findAll();
+        list.sort(Comparator.comparing(Dozent::getDozId));
+        return list;
     }
 
     @Override
     public List<Kurstyp> getKurstypen() throws KursDBException {
-        return kurstypRepository.findAll();
+        final List<Kurstyp> list = kurstypRepository.findAll();
+        list.sort(Comparator.comparing(Kurstyp::getTypId));
+        return list;
     }
 
     @Override
     public List<Kurs> getKurse() throws KursDBException {
-        return kursRepository.findAll();
+        final List<Kurs> list = kursRepository.findAll();
+        list.sort(Comparator.comparing(Kurs::getKursId));
+        return list;
     }
 
     @Override
@@ -78,27 +93,27 @@ public class CombinedRepository implements IKurssystemService,AutoCloseable {
 
     @Override
     public void insertKurs(Kurs kurs) throws KursDBException {
-        kursRepository.persist(kurs);
+        if(!kursRepository.persist(kurs))
+            throw new KursDBException();
     }
 
     @Override
     public List<Kunde> getKundenFromKurs(Kurs kurs) throws KursDBException {
-        return kundeRepository.findByKurs(kurs);
+        return new ArrayList<>(kundeRepository.findByKurs(kurs));
     }
 
     @Override
     public void bucheKurs(Kunde kunde, Kurs kurs) throws KursDBException {
-        kunde.addKurs(kurs);
+        kundeRepository.bucheKurs(kunde, kurs);
     }
 
     @Override
     public void storniereKurs(Kunde kunde, Kurs kurs) throws KursDBException {
-        kunde.removeKurs(kurs);
+        kundeRepository.storniereKurs(kunde,kurs);
     }
 
     @Override
     public void close() throws Exception {
-        JPAUtil.close();
         kurstypRepository.close();
         kursRepository.close();
         dozentRepository.close();

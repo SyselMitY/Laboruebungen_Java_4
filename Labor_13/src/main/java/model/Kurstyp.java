@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Kurstyp {
     @Id
-    @Column(name = "typ_id", nullable = false, length = -1)
+    @Column(name = "typ_id", nullable = false, length = 1)
     @Size(min = 1,max = 1)
     private String typId;
 

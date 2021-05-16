@@ -4,6 +4,9 @@ import model.Kunde;
 import model.Kurs;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,11 +33,9 @@ public class KundeRepository extends BaseRepository<Kunde> {
         return super.findAll(Kunde.class);
     }
 
-    public List<Kunde> findByKurs(Kurs k) {
+    public Collection<Kunde> findByKurs(Kurs k) {
         EntityManager em = JPAUtil.getEMF().createEntityManager();
-        return em.createQuery("SELECT k.kunden FROM Kurs k WHERE k = :kurs", Kunde.class)
-                .setParameter("kurs", k)
-                .getResultList();
+        return mergeIfNotContained(k, em).getKunden();
     }
 
     @Override
@@ -44,6 +45,65 @@ public class KundeRepository extends BaseRepository<Kunde> {
 
     @Override
     boolean delete(Kunde kunde) {
-        return super.delete(kunde);
+        EntityManager em = JPAUtil.getEMF().createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+            kunde = mergeIfNotContained(kunde, em);
+
+            Kunde finalKunde = kunde;
+            kunde.getKurse().forEach(finalKunde::removeKurs);
+
+            em.remove(kunde);
+            tx.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (tx.isActive())
+                tx.rollback();
+            return false;
+        } finally {
+            em.close();
+        }
     }
+
+    public void bucheKurs(Kunde kunde, Kurs kurs) {
+        EntityManager em = JPAUtil.getEMF().createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+            kunde = mergeIfNotContained(kunde, em);
+            kurs = mergeIfNotContained(kurs, em);
+
+            kunde.addKurs(kurs);
+            tx.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (tx.isActive())
+                tx.rollback();
+        } finally {
+            em.close();
+        }
+
+    }
+
+    public void storniereKurs(Kunde kunde, Kurs kurs) {
+        EntityManager em = JPAUtil.getEMF().createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+            kunde = mergeIfNotContained(kunde, em);
+            kurs = mergeIfNotContained(kurs, em);
+
+            kunde.removeKurs(kurs);
+            tx.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (tx.isActive())
+                tx.rollback();
+        } finally {
+            em.close();
+        }
+    }
+
 }

@@ -13,7 +13,7 @@ public class DozentRepository extends BaseRepository<Dozent> {
     private static DozentRepository INSTANCE;
 
     public static DozentRepository getInstance() {
-        if (INSTANCE != null) {
+        if (INSTANCE == null) {
             INSTANCE = new DozentRepository();
         }
         return INSTANCE;
