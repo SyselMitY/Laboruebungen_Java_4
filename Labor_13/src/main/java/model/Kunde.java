@@ -27,7 +27,7 @@ public class Kunde {
     private String kundeVorname;
 
     @ManyToMany
-    @JoinTable(name = "kurs_kunde", catalog = "db_4chif_21_labor_13", schema = "public",
+    @JoinTable(name = "kurs_kunde",
             joinColumns = @JoinColumn(name = "kunde_id", referencedColumnName = "kunde_id", nullable = false),
             inverseJoinColumns = @JoinColumn(name = "kurs_id", referencedColumnName = "kurs_id", nullable = false))
     private List<Kurs> kurse;

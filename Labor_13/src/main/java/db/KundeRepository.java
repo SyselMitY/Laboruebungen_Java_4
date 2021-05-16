@@ -16,7 +16,7 @@ public class KundeRepository extends BaseRepository<Kunde> {
     private static KundeRepository INSTANCE;
 
     public static KundeRepository getInstance() {
-        if (INSTANCE != null) {
+        if (INSTANCE == null) {
             INSTANCE = new KundeRepository();
         }
         return INSTANCE;

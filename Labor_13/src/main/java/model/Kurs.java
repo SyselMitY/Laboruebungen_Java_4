@@ -4,7 +4,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +23,7 @@ public class Kurs {
 
     @Basic
     @Column(name = "kurs_beginndatum", nullable = true)
-    private Date kursBeginndatum;
+    private LocalDate kursBeginndatum;
 
     @ManyToOne
     @JoinColumn(name = "kurs_typ", referencedColumnName = "typ_id")
@@ -52,11 +52,11 @@ public class Kurs {
         this.kursBezeichnung = kursBezeichnung;
     }
 
-    public Date getKursBeginndatum() {
+    public LocalDate getKursBeginndatum() {
         return kursBeginndatum;
     }
 
-    public void setKursBeginndatum(Date kursBeginndatum) {
+    public void setKursBeginndatum(LocalDate kursBeginndatum) {
         this.kursBeginndatum = kursBeginndatum;
     }
 
@@ -105,7 +105,7 @@ public class Kurs {
         kunde.getKurse().add(this);
     }
 
-    public Kurs(@Size(max = 100) String kursBezeichnung, Date kursBeginndatum, Kurstyp kurstyp, Dozent dozent) {
+    public Kurs(@Size(max = 100) String kursBezeichnung, LocalDate kursBeginndatum, Kurstyp kurstyp, Dozent dozent) {
         this.kursBezeichnung = kursBezeichnung;
         this.kursBeginndatum = kursBeginndatum;
         this.kurstyp = kurstyp;

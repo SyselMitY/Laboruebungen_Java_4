@@ -42,6 +42,8 @@ public abstract class BaseRepository<T> implements AutoCloseable {
         EntityTransaction tx = em.getTransaction();
         try {
             tx.begin();
+            if(!em.contains(t))
+                t = em.merge(t);
             em.remove(t);
             tx.commit();
             return true;
