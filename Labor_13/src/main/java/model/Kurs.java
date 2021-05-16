@@ -96,16 +96,8 @@ public class Kurs {
         return dozent;
     }
 
-    public void setDozent(Dozent dozent) {
-        this.dozent = dozent;
-    }
-
     public List<Kunde> getKunden() {
         return kunden;
-    }
-
-    public void setKunden(List<Kunde> kunden) {
-        this.kunden = kunden;
     }
 
     public void addKunde(Kunde kunde) {

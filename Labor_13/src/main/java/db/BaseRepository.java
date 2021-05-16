@@ -5,11 +5,7 @@ import javax.persistence.EntityTransaction;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class BaseRepository<T> {
-
-    BaseRepository() {
-
-    }
+public abstract class BaseRepository<T> implements AutoCloseable {
 
     Optional<T> findById(Class<T> c, Object id) {
         EntityManager em = JPAUtil.getEMF().createEntityManager();
@@ -41,4 +37,26 @@ public abstract class BaseRepository<T> {
         }
     }
 
+    boolean delete(T t) {
+        EntityManager em = JPAUtil.getEMF().createEntityManager();
+        EntityTransaction tx = em.getTransaction();
+        try {
+            tx.begin();
+            em.remove(t);
+            tx.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (tx.isActive())
+                tx.rollback();
+            return false;
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public void close() throws Exception {
+        JPAUtil.close();
+    }
 }

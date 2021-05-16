@@ -82,10 +82,6 @@ public class Kunde {
         return kurse;
     }
 
-    public void setKurse(List<Kurs> kurse) {
-        this.kurse = kurse;
-    }
-
     public void addKurs(Kurs kurs) {
         this.kurse.add(kurs);
         kurs.getKunden().add(this);
@@ -95,5 +91,10 @@ public class Kunde {
         this.kundeZuname = kundeZuname;
         this.kundeVorname = kundeVorname;
         this.kurse = new ArrayList<>();
+    }
+
+    public void removeKurs(Kurs kurs) {
+        this.kurse.remove(kurs);
+        kurs.getKunden().remove(this);
     }
 }
