@@ -7,6 +7,9 @@
         <class>model.Kunde</class>
         <class>model.Kurs</class>
         <class>model.Kurstyp</class>
+        <class>model.Mitarbeiter</class>
+        <class>model.Frage</class>
+        <class>model.Antwort</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
             <property name="javax.persistence.jdbc.url" value="jdbc:h2:mem:test"/>
