@@ -9,7 +9,7 @@
         </provider>
         <class>labor11.model.Customer</class>
         <class>labor11.model.Address</class>
-        <class>labor11.model.Book</class>
+        <class>labor11.model.cf.soisi.rest_simple.model.Book</class>
         <class>labor11.model.Publisher</class>
         <class>labor11.model.BookCategory</class>
         <properties>

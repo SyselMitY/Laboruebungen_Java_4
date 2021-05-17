@@ -10,6 +10,7 @@
         <module name="Threads" />
         <module name="JPA Mapping" />
         <module name="Wiederholung" />
+        <module name="Rest_Simple" />
         <module name="JDBC_Pi" />
         <module name="Spring_Employee" />
         <module name="JDBC_Grundübung" />
@@ -24,18 +25,20 @@
       <module name="Designpatterns" target="14" />
       <module name="JDBC_Grundübung" target="14" />
       <module name="JDBC_Pi" target="14" />
-      <module name="JPA Mapping" target="14" />
+      <module name="JPA Mapping" target="1.5" />
       <module name="JPA_Uebungen" target="16" />
       <module name="JPA_Uebungen_2" target="15" />
+      <module name="Rest_Simple" target="11" />
       <module name="Spring_Employee" target="16" />
-      <module name="StreamingAPI" target="14.1" />
-      <module name="Synchronisation" target="14.1" />
-      <module name="Threads" target="14.1" />
-      <module name="Wiederholung" target="14.1" />
+      <module name="StreamingAPI" target="1.5" />
+      <module name="Synchronisation" target="1.5" />
+      <module name="Threads" target="1.5" />
+      <module name="Wiederholung" target="1.5" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Rest_Simple" options="-parameters" />
       <module name="Spring_Employee" options="-parameters" />
       <module name="StreamingAPI" options="" />
     </option>
