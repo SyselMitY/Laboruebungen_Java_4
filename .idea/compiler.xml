@@ -7,18 +7,19 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Wiederholung" />
+        <module name="JDBC_Pi" />
+        <module name="StreamingAPI" />
+        <module name="Designpatterns" />
         <module name="Threads" />
         <module name="JPA Mapping" />
-        <module name="Wiederholung" />
         <module name="Rest_Simple" />
-        <module name="JDBC_Pi" />
         <module name="Spring_Employee" />
         <module name="JDBC_Grundübung" />
-        <module name="StreamingAPI" />
+        <module name="Rest_SocialMedia" />
         <module name="JPA_Uebungen_2" />
         <module name="JPA_Uebungen" />
         <module name="Synchronisation" />
-        <module name="Designpatterns" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -29,6 +30,7 @@
       <module name="JPA_Uebungen" target="16" />
       <module name="JPA_Uebungen_2" target="15" />
       <module name="Rest_Simple" target="11" />
+      <module name="Rest_SocialMedia" target="11" />
       <module name="Spring_Employee" target="16" />
       <module name="StreamingAPI" target="1.5" />
       <module name="Synchronisation" target="1.5" />
@@ -39,6 +41,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Rest_Simple" options="-parameters" />
+      <module name="Rest_SocialMedia" options="-parameters" />
       <module name="Spring_Employee" options="-parameters" />
       <module name="StreamingAPI" options="" />
     </option>

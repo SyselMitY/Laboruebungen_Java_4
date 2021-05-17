@@ -7,6 +7,7 @@ import model.Mitarbeiter;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.validation.ValidationException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +23,8 @@ public class UmfrageRepository implements AutoCloseable {
     }
 
     public boolean beantworteFrage(Antwort antwort) {
-        if(antwort.getTimestamp().isAfter(antwort.getId().getFrage().getExpirationDate()))
+        LocalDate expirationDate = antwort.getId().getFrage().getExpirationDate();
+        if(antwort.getTimestamp().isAfter(expirationDate))
             throw new IllegalStateException("Frage has already expired");
         return this.persist(antwort);
     }
