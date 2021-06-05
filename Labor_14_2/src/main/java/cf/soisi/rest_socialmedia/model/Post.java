@@ -25,7 +25,6 @@ public class Post implements Serializable {
     private String message;
 
     @ManyToOne(optional = false)
-    @Setter
     private User user;
 
 

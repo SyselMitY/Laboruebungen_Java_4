@@ -1,0 +1,119 @@
+### Get all posts
+GET http://{{host}}/posts
+
+> expect_200.js
+
+
+### Get post by id
+GET http://{{host}}/posts/5
+
+> expect_200.js
+
+
+### Get all users
+GET http://{{host}}/users
+
+> expect_200.js
+
+
+### Add new user
+POST http://{{host}}/users
+Content-Type: application/json
+
+{
+  "name": "NeuerNutzer123",
+  "birthday": "1999-08-16"
+}
+
+> expect_201.js
+
+
+### Get user by id
+GET http://{{host}}/users/2
+
+> expect_200.js
+
+
+### Create post with user id
+POST http://{{host}}/users/13/posts
+Content-Type: application/json
+
+{
+  "message": "Dank je wel, Litunde. Doei en Tot ziens."
+}
+
+> expect_201.js
+
+
+### Delete user by id
+DELETE http://{{host}}/users/13
+
+> expect_204.js
+
+
+### Get posts by user id
+GET http://{{host}}/users/2/posts
+
+> expect_200.js
+
+
+######################
+##### Edge Cases #####
+######################
+
+### User not found
+GET http://{{host}}/users/19
+
+> expect_404.js
+
+
+### Post not found
+GET http://{{host}}/posts/1
+
+> expect_404.js
+
+
+### Invalid user
+POST http://{{host}}/users/
+Content-Type: application/json
+
+{
+  "name": "ZukunftsKind99",
+  "birthday": "2999-08-16"
+}
+
+> expect_400.js
+
+
+### Duplicate user
+POST http://{{host}}/users/
+Content-Type: application/json
+
+{
+  "name": "Hugo",
+  "birthday": "2009-08-16"
+}
+
+> expect_400.js
+
+
+### Create post with false user id
+POST http://{{host}}/users/100/posts
+Content-Type: application/json
+
+{
+  "message": "Ollas hinnig, wos is los"
+}
+
+> expect_404.js
+
+
+### Create post with invalid message
+POST http://{{host}}/users/1/posts
+Content-Type: application/json
+
+{
+  "message": ""
+}
+
+> expect_400.js

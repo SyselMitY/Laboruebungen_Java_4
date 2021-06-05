@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
@@ -23,7 +24,7 @@ public class User implements Serializable {
     private Integer id;
 
     @Column(unique = true)
-    @NotNull
+    @NotBlank
     @Size(min = 3)
     private String name;
 
@@ -40,4 +41,9 @@ public class User implements Serializable {
         this.birthday = birthday;
         this.postList = new ArrayList<>();
     }
+
+    public User(User user) {
+        this(user.name, user.birthday);
+    }
+
 }

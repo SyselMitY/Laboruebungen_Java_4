@@ -35,6 +35,5 @@ public class DataInitializer {
 
         userRepository.saveAll(users);
         postRepository.saveAll(posts);
-
     }
 }
