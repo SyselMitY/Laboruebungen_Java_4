@@ -1,5 +1,6 @@
 package com.example.gutegadsen_backend.model;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.io.Serializable;
 @Entity
 @NoArgsConstructor
 @Getter
+@EqualsAndHashCode
 public class Tag implements Serializable {
     @Id
     @Size(min = 2,max = 16)

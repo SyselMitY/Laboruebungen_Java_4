@@ -1,5 +1,7 @@
 package com.example.gutegadsen_backend.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -13,12 +15,14 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @Getter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class User implements Serializable {
     @Id
     @NotBlank
     @Pattern(regexp = "^[A-Za-z][A-Za-z1-9_]{3,15}$")
     @Size(min = 4, max = 16)
-    private String id;
+    @EqualsAndHashCode.Include
+    private String username;
 
     @OneToMany
     private List<Post> postList;

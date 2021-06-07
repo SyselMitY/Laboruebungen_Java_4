@@ -90,7 +90,7 @@ public class SocialMediaRestController {
         Post savedPost = postRepository.save(safePost);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
-                .replacePath("/posts({id}")
+                .replacePath("/posts/{id}")
                 .build(savedPost.getId());
         return ResponseEntity.created(uri).body(savedPost);
     }
