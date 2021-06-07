@@ -4,8 +4,10 @@ import com.example.gutegadsen_backend.db.ImageRepository;
 import com.example.gutegadsen_backend.db.PostRepository;
 import com.example.gutegadsen_backend.db.TagRepository;
 import com.example.gutegadsen_backend.db.UserRepository;
+import com.example.gutegadsen_backend.exception.PostNotFoundException;
 import com.example.gutegadsen_backend.exception.UserNotFoundException;
 import com.example.gutegadsen_backend.model.Post;
+import com.example.gutegadsen_backend.model.Tag;
 import com.example.gutegadsen_backend.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
@@ -46,5 +49,21 @@ public class GuteGadsenRestController {
                 .orElseThrow(() -> new UserNotFoundException(username));
 
         return postRepository.findAllByUserUsername(username);
+    }
+
+    @GetMapping("/posts/{postId}")
+    public Post getPostById(@PathVariable Long postId) throws PostNotFoundException {
+        return postRepository
+                .findById(postId)
+                .orElseThrow(() -> new PostNotFoundException(postId));
+    }
+
+    @GetMapping("/tags")
+    public List<String> getAllTags() {
+        return tagRepository
+                .findAll()
+                .stream()
+                .map(Tag::getName)
+                .collect(Collectors.toList());
     }
 }

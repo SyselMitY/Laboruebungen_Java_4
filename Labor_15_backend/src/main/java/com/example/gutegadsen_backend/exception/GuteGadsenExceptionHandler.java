@@ -13,4 +13,10 @@ public class GuteGadsenExceptionHandler {
     public UserNotFoundException handleUserNotFound(UserNotFoundException e) {
         return e;
     }
+    
+    @ExceptionHandler(PostNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public PostNotFoundException handlePostNotFound(PostNotFoundException e) {
+        return e;
+    }
 }

@@ -15,7 +15,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
-          <factory-entry name="GuteGadsen_backend" />
+          <factory-entry name="GuteGadsen_backend" value="20d2db14-d4dc-481e-a9bb-108ad702c744" />
         </datasource-mapping>
         <naming-strategy-map />
       </configuration>
