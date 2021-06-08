@@ -1,15 +1,10 @@
 package com.example.gutegadsen_backend.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Lob;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -24,6 +19,10 @@ public class Image implements Serializable {
     private Long id;
 
     @Lob
-    @NotNull
-    private byte[] imageByteArray;
+    @Basic(fetch = FetchType.LAZY)
+    private @NotNull String imageDataString;
+
+    public Image(@NotNull String imageDataString) {
+        this.imageDataString = imageDataString;
+    }
 }

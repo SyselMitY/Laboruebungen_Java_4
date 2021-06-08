@@ -1,5 +1,6 @@
 package com.example.gutegadsen_backend.model;
 
+import com.example.gutegadsen_backend.util.PostCreationRequestBody;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -43,15 +45,18 @@ public class Post implements Serializable {
     @OneToOne(optional = false)
     private Image image;
 
-    public Post(String title, User user, Set<Tag> tagList, Image image) {
+    public Post(String title, User user, Collection<Tag> tagList, Image image) {
         this.title = title;
         this.user = user;
-        this.tagList = tagList;
         this.image = image;
         this.postDate = LocalDate.now();
 
         this.upvoteList = new HashSet<>();
         this.tagList = new HashSet<>();
         this.tagList.addAll(tagList);
+    }
+
+    public Post(PostCreationRequestBody source,User user) {
+        this(source.getTitle(), user, source.getTagsAsSet(), new Image(source.getImageDataString()));
     }
 }

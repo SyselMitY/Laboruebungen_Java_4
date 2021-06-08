@@ -9,11 +9,13 @@ import com.example.gutegadsen_backend.exception.UserNotFoundException;
 import com.example.gutegadsen_backend.model.Post;
 import com.example.gutegadsen_backend.model.Tag;
 import com.example.gutegadsen_backend.model.User;
+import com.example.gutegadsen_backend.util.PostCreationRequestBody;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -37,7 +39,7 @@ public class GuteGadsenRestController {
                 .orElseThrow(() -> new UserNotFoundException(username));
     }
 
-    @GetMapping("/posts")
+    @GetMapping("/posts/view")
     public List<Post> getAllPosts() {
         return postRepository.findAll();
     }
@@ -51,7 +53,7 @@ public class GuteGadsenRestController {
         return postRepository.findAllByUserUsername(username);
     }
 
-    @GetMapping("/posts/{postId}")
+    @GetMapping("/posts/view/{postId}")
     public Post getPostById(@PathVariable Long postId) throws PostNotFoundException {
         return postRepository
                 .findById(postId)
@@ -65,5 +67,18 @@ public class GuteGadsenRestController {
                 .stream()
                 .map(Tag::getName)
                 .collect(Collectors.toList());
+    }
+
+
+    @PostMapping("/posts/create")
+    public ResponseEntity<Post> createNewPost(@RequestBody PostCreationRequestBody body) {
+        Post newPost = new Post(body,new User());
+        Post savedPost = postRepository.save(newPost);
+
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .replacePath("/posts/view/{id}")
+                .build(savedPost.getId());
+        return ResponseEntity.created(uri).body(savedPost);
     }
 }
