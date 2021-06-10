@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Configuration;
 public class TestDataController {
 
     public TestDataController(UserRepository userRepository, PostRepository postRepository, ImageRepository imageRepository, TagRepository tagRepository) {
-
     }
 
 }
