@@ -41,10 +41,9 @@ public class Post implements Serializable {
     private Set<User> upvoteList;
 
     @ManyToMany
-    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private Set<Tag> tagList;
 
-    @OneToOne(optional = false)
+    @ManyToOne(optional = false)
     private Image image;
 
     public Post(String title, User user, Collection<Tag> tagList, Image image) {

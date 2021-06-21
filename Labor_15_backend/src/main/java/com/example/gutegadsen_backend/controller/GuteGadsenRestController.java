@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin
 public class GuteGadsenRestController {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
