@@ -4,6 +4,7 @@ import com.example.gutegadsen_backend.util.PostCreationRequestBody;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -40,6 +41,7 @@ public class Post implements Serializable {
     private Set<User> upvoteList;
 
     @ManyToMany
+    @Cascade(org.hibernate.annotations.CascadeType.PERSIST)
     private Set<Tag> tagList;
 
     @OneToOne(optional = false)

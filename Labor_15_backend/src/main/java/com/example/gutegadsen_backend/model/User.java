@@ -1,9 +1,11 @@
 package com.example.gutegadsen_backend.model;
 
+import com.example.gutegadsen_backend.util.UserCreationRequestBody;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -32,4 +34,13 @@ public class User implements Serializable {
 
     @OneToOne
     private Image profilePicture;
+
+    public User(String username, Image profilePicture) {
+        this.username = username;
+        this.profilePicture = profilePicture;
+    }
+
+    public User(UserCreationRequestBody requestBody) {
+        this(requestBody.getUsername(), new Image(requestBody.getImageDataString()));
+    }
 }

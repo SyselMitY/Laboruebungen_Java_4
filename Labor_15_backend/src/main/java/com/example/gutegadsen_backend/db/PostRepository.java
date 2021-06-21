@@ -1,6 +1,7 @@
 package com.example.gutegadsen_backend.db;
 
 import com.example.gutegadsen_backend.model.Post;
+import com.example.gutegadsen_backend.model.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,4 +10,6 @@ import java.util.List;
 @Repository
 public interface PostRepository extends JpaRepository<Post,Long> {
     List<Post> findAllByUserUsername(String userName);
+
+    List<Post> findAllByTagListContaining(Tag tag);
 }
