@@ -47,15 +47,19 @@ header {
   gap: 3rem;
   z-index: 10;
   transition: all 300ms cubic-bezier(.17, .84, .44, 1);
+  min-height: 2rem;
 
   &:hover {
     top: 0;
-    height: 5vmax;
     opacity: 1;
   }
 
   &.split {
     margin-left: auto;
+  }
+
+  & a {
+    color: white;
   }
 
   @media screen and (max-width: 1200px) {
