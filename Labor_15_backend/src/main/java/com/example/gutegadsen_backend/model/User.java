@@ -1,11 +1,10 @@
 package com.example.gutegadsen_backend.model;
 
 import com.example.gutegadsen_backend.util.UserCreationRequestBody;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cascade;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -33,6 +32,7 @@ public class User implements Serializable {
     private List<Post> upvoteList;
 
     @OneToOne
+    @Setter
     private Image profilePicture;
 
     public User(String username, Image profilePicture) {
@@ -41,6 +41,7 @@ public class User implements Serializable {
     }
 
     public User(UserCreationRequestBody requestBody) {
-        this(requestBody.getUsername(), new Image(requestBody.getImageDataString()));
+        this.username = requestBody.getUsername();
+        if(requestBody.getImageDataString() != null) this.profilePicture = new Image(requestBody.getImageDataString());
     }
 }

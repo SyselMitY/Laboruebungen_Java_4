@@ -5,21 +5,37 @@
       <router-link to="/about">About</router-link>
       <router-link to="/posts">Posts</router-link>
       <img class="split profile-picture" v-if="userToken !== undefined"/>
+      <router-link class="split" to="/login" v-if="userToken === undefined">Login</router-link>
     </header>
     <router-view/>
   </div>
 </template>
 
 <script>
+import endpoints from "@/config/endpoints.config"
+
 export default {
+  name: "App",
   data() {
     return {
-      loggedInUser: undefined
+      loggedInUser: undefined,
+      profilePicture: undefined
     }
   },
   computed: {
     userToken() {
-      return localStorage.getItem("username")
+      let username = localStorage.getItem("username");
+      if (username === undefined) return undefined;
+      if (username === null) return undefined;
+      if (username === "") return undefined;
+      return username;
+    }
+  },
+  watch: {
+    loggedInUser(newUser) {
+      fetch(endpoints.api.images.id(newUser.profilePictureId))
+      .then(response => response.json())
+      .then(json => this.profilePicture = json.imageDataString)
     }
   }
 }
@@ -31,6 +47,10 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #2c3e50;
+}
+
+.b-toast {
+  z-index: 100;
 }
 
 header {
@@ -54,7 +74,7 @@ header {
     opacity: 1;
   }
 
-  &.split {
+  & .split {
     margin-left: auto;
   }
 

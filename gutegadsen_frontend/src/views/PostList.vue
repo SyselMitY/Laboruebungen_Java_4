@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import PostCard from "@/views/PostCard";
+import PostCard from "@/components/PostCard";
 import endpoints from "@/config/endpoints.config"
 
 export default {

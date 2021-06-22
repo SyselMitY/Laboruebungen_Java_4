@@ -9,6 +9,7 @@ import com.example.gutegadsen_backend.model.Image;
 import com.example.gutegadsen_backend.model.Post;
 import com.example.gutegadsen_backend.model.Tag;
 import com.example.gutegadsen_backend.model.User;
+import com.example.gutegadsen_backend.util.AvatarChangeRequestBody;
 import com.example.gutegadsen_backend.util.PostCreationRequestBody;
 import com.example.gutegadsen_backend.util.UserCreationRequestBody;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:8080")
 public class GuteGadsenRestController {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
@@ -42,7 +43,7 @@ public class GuteGadsenRestController {
                 .orElseThrow(() -> new UserNotFoundException(username));
     }
 
-    @PostMapping("/users/create")
+    @PostMapping("/users/register")
     public ResponseEntity<User> createUser(@RequestBody UserCreationRequestBody body) throws UserAlreadyExistsException {
         User existingUser = userRepository
                 .findById(body.getUsername())
@@ -53,7 +54,7 @@ public class GuteGadsenRestController {
         }
 
         User newUser = new User(body);
-        imageRepository.save(newUser.getProfilePicture());
+        if (newUser.getProfilePicture() != null) imageRepository.save(newUser.getProfilePicture());
         User savedUser = userRepository.save(newUser);
 
         URI uri = ServletUriComponentsBuilder
@@ -61,6 +62,22 @@ public class GuteGadsenRestController {
                 .replacePath("/users/{id}")
                 .build(savedUser.getUsername());
         return ResponseEntity.created(uri).body(savedUser);
+    }
+
+    @PutMapping("/users/avatar")
+    ResponseEntity<?> changeProfilePicture(@RequestBody @Valid AvatarChangeRequestBody body) throws UserNotFoundException {
+        User user = userRepository
+                .findById(body.getUsername())
+                .orElseThrow(() -> new UserNotFoundException(body.getUsername()));
+        Image newImage = new Image(body.getImageDataString());
+        Image savedImage = imageRepository.save(newImage);
+        user.setProfilePicture(savedImage);
+
+        URI uri = ServletUriComponentsBuilder
+                .fromCurrentRequest()
+                .replacePath("/images/{id}")
+                .build(savedImage.getId());
+        return ResponseEntity.created(uri).build();
     }
 
     @GetMapping("/posts/list")

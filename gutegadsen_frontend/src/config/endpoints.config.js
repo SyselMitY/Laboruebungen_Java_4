@@ -8,6 +8,9 @@ export default {
         },
         images: {
             id: (id) => `${baseUrl}/images/${id}`
+        },
+        users: {
+            register: `${baseUrl}/users/register`
         }
     }
 };
