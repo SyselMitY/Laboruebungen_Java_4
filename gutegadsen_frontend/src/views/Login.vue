@@ -31,7 +31,7 @@
                 valid-feedback="Alles passt!"
                 :invalid-feedback="passwordInvalidFeedback(registerFormData.password)"
                 :state="passwordState(registerFormData.password)">
-              <b-form-input id="register-username"
+              <b-form-input id="register-password"
                             type="password"
                             v-model="registerFormData.password"
                             :state="passwordState(registerFormData.password)"
@@ -46,7 +46,7 @@
                 valid-feedback="Alles passt!"
                 invalid-feedback="Passwort stimmt nicht überein!"
                 :state="passwordRepeatState()">
-              <b-form-input id="register-username"
+              <b-form-input id="register-password-repeat"
                             type="password"
                             v-model="registerFormData.passwordRepeat"
                             :state="passwordRepeatState()"
@@ -56,6 +56,7 @@
           </b-form>
         </b-tab>
       </b-tabs>
+      <b-button @click="() => showCustomToast('hehe hoho','Toaster','primary')">Knopferl</b-button>
     </b-card>
   </div>
 </template>
@@ -124,13 +125,15 @@ export default {
           autoHideDelay: 5000
         });
       } else {
-        this.$root.$bvToast.toast("Ein unbekannter Fehler ist aufgetreten", {
-          title: "Fehler",
-          // variant: "danger",
-          autoHideDelay: 50000
-        })
+        this.showCustomToast("Fehler", "Ein unbekannter Fehler ist aufgetreten", "danger");
         this.loginPending = false;
       }
+    },
+    showCustomToast(title, message, variant) {
+      this.$root.$bvToast.toast(message, {
+        title: title,
+        variant: variant,
+      })
     },
     loginSubmit(event) {
       event.preventDefault();
