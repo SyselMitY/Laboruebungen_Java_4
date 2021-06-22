@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <header>
+    <header class="app-header">
       <router-link to="/">Home</router-link>
       <router-link to="/about">About</router-link>
       <router-link to="/posts">Posts</router-link>
@@ -49,11 +49,8 @@ export default {
   color: #2c3e50;
 }
 
-.b-toast {
-  z-index: 100;
-}
 
-header {
+.app-header {
   width: 100vw;
   height: 3.5vmax;
   background-color: #101010;

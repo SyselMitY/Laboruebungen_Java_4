@@ -129,8 +129,8 @@ export default {
         this.loginPending = false;
       }
     },
-    showCustomToast(title, message, variant) {
-      this.$root.$bvToast.toast(message, {
+    showCustomToast(title, message,variant) {
+      this.$bvToast.toast(message, {
         title: title,
         variant: variant,
       })
