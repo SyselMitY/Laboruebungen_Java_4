@@ -107,6 +107,12 @@ export default {
       loginPending: false
     }
   },
+  mounted() {
+    if(this.$route.params.showLoginToast)
+      this.$bvToast.toast("Bitte melde dich vorher an",{
+        title:"Anmelden"
+      })
+  },
   methods: {
     usernameState(username) {
       if (username === "" || username === undefined) return null;

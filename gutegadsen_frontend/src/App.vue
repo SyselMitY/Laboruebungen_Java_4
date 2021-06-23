@@ -2,8 +2,8 @@
   <div id="app">
     <header class="app-header" @click="headerShown = !headerShown" :class="{shown: headerShown}">
       <router-link class="header-link" to="/">Home</router-link>
-      <router-link class="header-link" to="/about">About</router-link>
       <router-link class="header-link" to="/posts">Posts</router-link>
+      <router-link class="header-link" to="/posts/create">Post erstellen</router-link>
 
       <span class="header-right"/>
 

@@ -3,9 +3,6 @@
     <div v-if="posts !== undefined" class="post-list-container">
       <PostCard v-for="post in posts" :key="post.id" :post="post"/>
     </div>
-<!--    <div v-else class="post-list-loading">-->
-<!--      <b-spinner class="loading-spinner"></b-spinner>-->
-<!--    </div>-->
   </div>
 </template>
 
