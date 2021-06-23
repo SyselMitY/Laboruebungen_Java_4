@@ -1,8 +1,11 @@
 <template>
   <div class="post-list">
-    <div class="post-list-container">
+    <div v-if="posts !== undefined" class="post-list-container">
       <PostCard v-for="post in posts" :key="post.id" :post="post"/>
     </div>
+<!--    <div v-else class="post-list-loading">-->
+<!--      <b-spinner class="loading-spinner"></b-spinner>-->
+<!--    </div>-->
   </div>
 </template>
 
@@ -15,7 +18,7 @@ export default {
   components: {PostCard},
   data() {
     return {
-      posts: [],
+      posts: undefined,
     }
   },
   mounted() {
@@ -31,4 +34,5 @@ export default {
   margin: 7vmax auto;
   width: fit-content;
 }
+
 </style>

@@ -38,7 +38,7 @@ export default {
     height: 90%;
     object-fit: cover;
     width: 100%;
-
+    flex-shrink: 1;
   }
 
 }

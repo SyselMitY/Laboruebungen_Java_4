@@ -15,7 +15,7 @@ const routes = [
         path: '/posts',
         name: 'PostList',
         component: PostList
-    },{
+    }, {
         path: '/login',
         name: 'Login',
         component: Login
@@ -34,15 +34,16 @@ const router = new VueRouter({
     routes
 })
 
-function checkAuthenticated(next) {
+function checkAuthenticated(to,from,next) {
     let username = localStorage.getItem("username");
-    if (username == null) next({name: "login"});
-    else next();
+    if (username == null) {
+        next({name: "login",query: from.path});
+    } else next();
 }
 
 function checkAuthentification(to, from, next) {
     if (to.matched.some(value => value.meta.requiresAuth)) {
-        checkAuthenticated(next);
+        checkAuthenticated(to,from,next);
     } else {
         next();
     }

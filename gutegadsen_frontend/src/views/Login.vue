@@ -4,9 +4,33 @@
       <b-tabs card>
         <b-tab title="Login">
           <b-form @submit="loginSubmit">
+            <b-form-group
+                id="login-username-group"
+                label="Benutzername"
+                label-for="register-username">
+              <b-form-input id="login-username"
+                            v-model="loginFormData.username"
+                            trim
+                            required
+                            @keypress.enter="loginSubmit"></b-form-input>
+            </b-form-group>
 
+            <b-form-group
+                id="login-password-group"
+                label="Passwort"
+                label-for="login-password">
+              <b-form-input id="login-password"
+                            type="password"
+                            v-model="loginFormData.password"
+                            trim
+                            required
+                            @keypress.enter="loginSubmit"></b-form-input>
+            </b-form-group>
+            <b-button type="submit" @click="loginSubmit" variant="primary">Login</b-button>
           </b-form>
         </b-tab>
+
+
         <b-tab title="Registrieren">
           <b-form @submit="registerSubmit">
             <b-form-group
@@ -20,7 +44,10 @@
               <b-form-input id="register-username"
                             v-model="registerFormData.username"
                             :state="usernameState(registerFormData.username)"
-                            trim></b-form-input>
+                            trim
+                            autocomplete="false"
+                            required
+                            @keypress.enter="registerSubmit"></b-form-input>
             </b-form-group>
 
             <b-form-group
@@ -35,7 +62,9 @@
                             type="password"
                             v-model="registerFormData.password"
                             :state="passwordState(registerFormData.password)"
-                            trim></b-form-input>
+                            trim
+                            required
+                            @keypress.enter="registerSubmit"></b-form-input>
             </b-form-group>
 
             <b-form-group
@@ -50,13 +79,14 @@
                             type="password"
                             v-model="registerFormData.passwordRepeat"
                             :state="passwordRepeatState()"
-                            trim></b-form-input>
+                            trim
+                            required
+                            @keypress.enter="registerSubmit"></b-form-input>
             </b-form-group>
             <b-button type="submit" variant="primary" :disabled="loginPending">Registrieren</b-button>
           </b-form>
         </b-tab>
       </b-tabs>
-      <b-button @click="() => showCustomToast('hehe hoho','Toaster','primary')">Knopferl</b-button>
     </b-card>
   </div>
 </template>
@@ -102,7 +132,7 @@ export default {
       return this.registerFormData.password === this.registerFormData.passwordRepeat;
 
     },
-    async registerSubmit(event) {
+    registerSubmit: async function (event) {
       event.preventDefault();
       this.loginPending = true;
 
@@ -118,26 +148,59 @@ export default {
         }
       });
 
+      let responseBody = await response.json();
+
       if (response.status === 201) {
-        this.$root.$bvToast.toast("Der Account wurde erfolgreich erstellt", {
-          title: "Erfolg",
-          // variant: "success",
-          autoHideDelay: 5000
-        });
+        this.showCustomToast("Erfolg", "Der Account wurde erfolgreich erstellt", "success");
+        localStorage.setItem("username", responseBody.username);
+        this.$emit("login-event")
+        await this.$router.push("/");
       } else {
-        this.showCustomToast("Fehler", "Ein unbekannter Fehler ist aufgetreten", "danger");
+        this.showCustomToast("Fehler", `Ein unbekannter Fehler ist aufgetreten: ${responseBody.message}`, "danger");
         this.loginPending = false;
       }
     },
-    showCustomToast(title, message,variant) {
-      this.$bvToast.toast(message, {
+    showCustomToast(title, message, variant) {
+      this.$root.$bvToast.toast(message, {
         title: title,
         variant: variant,
       })
     },
-    loginSubmit(event) {
+    async loginSubmit(event) {
       event.preventDefault();
       this.loginPending = true;
+
+      let requestBody = {
+        username: this.loginFormData.username,
+        password: btoa(this.loginFormData.password)
+      }
+      let response = await fetch(endpoints.api.users.login, {
+        method: "POST",
+        body: JSON.stringify(requestBody),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      let responseBody = await response.json();
+
+
+      switch (response.status) {
+        case 200:
+          this.showCustomToast("Erfolg", "Du bist jetzt angemeldet", "success");
+          localStorage.setItem("username", responseBody.username);
+          this.$emit("login-event")
+          await this.$router.push(this.$route.query.afterLogin !== undefined ? this.$route.query.afterLogin : "/");
+          break;
+        case 404:
+          this.showCustomToast("Fehler", `Der Benutzer ${responseBody.username} existiert nicht!`, "danger");
+          this.loginPending = false;
+          break;
+        default:
+          this.showCustomToast("Fehler", `Ein unbekannter Fehler ist aufgetreten: ${responseBody.message}`, "danger");
+          this.loginPending = false;
+          break;
+      }
     }
   }
 }

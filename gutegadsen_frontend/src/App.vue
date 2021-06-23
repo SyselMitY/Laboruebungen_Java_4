@@ -1,13 +1,23 @@
 <template>
   <div id="app">
-    <header class="app-header">
-      <router-link to="/">Home</router-link>
-      <router-link to="/about">About</router-link>
-      <router-link to="/posts">Posts</router-link>
-      <img class="split profile-picture" v-if="userToken !== undefined"/>
-      <router-link class="split" to="/login" v-if="userToken === undefined">Login</router-link>
+    <header class="app-header" @click="headerShown = !headerShown" :class="{shown: headerShown}">
+      <router-link class="header-link" to="/">Home</router-link>
+      <router-link class="header-link" to="/about">About</router-link>
+      <router-link class="header-link" to="/posts">Posts</router-link>
+
+      <span class="header-right"/>
+
+      <div class="header-user" v-if="loggedIn">
+        <router-link :to="profileLink" class="username header-link">{{ loggedInUser.username }}</router-link>
+        <b-avatar class="profile-picture" :src="profilePicture"/>
+      </div>
+      <a @click="logOut" class="header-link" v-if="loggedIn">Logout</a>
+
+      <router-link to="/login" v-else>Login</router-link>
+
+      <a class="header-link header-button"> {{headerShown?"Menü schließen":"Menü öffnen"}} </a>
     </header>
-    <router-view/>
+    <router-view v-on:login-event="fetchUsernameFromLS"/>
   </div>
 </template>
 
@@ -19,24 +29,51 @@ export default {
   data() {
     return {
       loggedInUser: undefined,
-      profilePicture: undefined
+      profilePicture: undefined,
+      headerShown: false
     }
   },
   computed: {
-    userToken() {
-      let username = localStorage.getItem("username");
-      if (username === undefined) return undefined;
-      if (username === null) return undefined;
-      if (username === "") return undefined;
-      return username;
+    loggedIn() {
+      if (this.loggedInUser === undefined) return false;
+      return this.loggedInUser !== "";
+    },
+    profileLink() {
+      return endpoints.api.users.id(this.loggedInUser)
     }
   },
   watch: {
-    loggedInUser(newUser) {
+    async loggedInUser(newUser) {
       fetch(endpoints.api.images.id(newUser.profilePictureId))
-      .then(response => response.json())
-      .then(json => this.profilePicture = json.imageDataString)
+          .then(response => response.json())
+          .then(json => this.profilePicture = json.imageDataString)
     }
+  },
+  methods: {
+    logOut() {
+      localStorage.removeItem("username");
+      this.fetchUsernameFromLS();
+      this.$bvToast.toast("Du wurdest abgemeldet", {
+        title: "Erfolg",
+        variant: "success",
+        autoHideDelay: 5000
+      })
+    },
+    async fetchUsernameFromLS() {
+      let item = localStorage.getItem("username");
+      if (item == null) {
+        this.loggedInUser = undefined;
+      } else {
+        let userResponse = await fetch(endpoints.api.users.id(item))
+        let responseBody = await userResponse.json();
+
+        if (userResponse.status === 404) localStorage.removeItem("username");
+        else this.loggedInUser = responseBody;
+      }
+    }
+  },
+  mounted() {
+    this.fetchUsernameFromLS();
   }
 }
 </script>
@@ -71,8 +108,12 @@ export default {
     opacity: 1;
   }
 
-  & .split {
+  & .header-right {
     margin-left: auto;
+  }
+
+  & .header-button {
+    display: none;
   }
 
   & a {
@@ -83,12 +124,60 @@ export default {
     top: 0;
     height: 6.5vh;
     opacity: 1;
+    padding: .5rem 2rem;
 
     &:hover {
       height: 6.5vh;
     }
 
   }
+
+  @media screen and (max-width: 720px) {
+    flex-direction: column;
+    height: 90vh;
+    padding: 1rem 1rem;
+    font-size: 1.5rem;
+    top: -80vh;
+    gap: 2rem;
+
+    & .header-right {
+      margin-top: auto;
+    }
+
+    & .header-user {
+      flex-direction: column;
+    }
+
+    & .profile-picture {
+      width: 6rem;
+      height: 6rem;
+    }
+
+    & .header-button {
+      display: inherit;
+    }
+
+    &:hover {
+      height: 90vh;
+      top: -80vh;
+    }
+
+    &.shown {
+      top: 0;
+    }
+
+  }
+}
+
+.header-link {
+  cursor: pointer;
+}
+
+.header-user {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-around;
 }
 
 </style>

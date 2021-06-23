@@ -12,6 +12,7 @@ import com.example.gutegadsen_backend.model.User;
 import com.example.gutegadsen_backend.util.AvatarChangeRequestBody;
 import com.example.gutegadsen_backend.util.PostCreationRequestBody;
 import com.example.gutegadsen_backend.util.UserCreationRequestBody;
+import com.example.gutegadsen_backend.util.UserLoginRequestBody;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -62,6 +63,20 @@ public class GuteGadsenRestController {
                 .replacePath("/users/{id}")
                 .build(savedUser.getUsername());
         return ResponseEntity.created(uri).body(savedUser);
+    }
+
+
+    @PostMapping("/users/login")
+    public User createUser(@RequestBody UserLoginRequestBody body) throws UserNotFoundException {
+        User existingUser = userRepository
+                .findById(body.getUsername())
+                .orElse(null);
+
+        if (existingUser == null) {
+            throw new UserNotFoundException(body.getUsername());
+        }
+
+        return existingUser;
     }
 
     @PutMapping("/users/avatar")
