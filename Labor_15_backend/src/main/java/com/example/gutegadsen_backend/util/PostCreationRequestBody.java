@@ -16,7 +16,7 @@ public class PostCreationRequestBody {
     private final String title;
     private final String[] tags;
     private final String imageDataString;
-    private final String userName;
+    private final String username;
 
     public Set<Tag> getTagsAsSet() {
         return Arrays.stream(tags)

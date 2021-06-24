@@ -9,11 +9,9 @@ import com.example.gutegadsen_backend.model.Image;
 import com.example.gutegadsen_backend.model.Post;
 import com.example.gutegadsen_backend.model.Tag;
 import com.example.gutegadsen_backend.model.User;
-import com.example.gutegadsen_backend.util.AvatarChangeRequestBody;
-import com.example.gutegadsen_backend.util.PostCreationRequestBody;
-import com.example.gutegadsen_backend.util.UserCreationRequestBody;
-import com.example.gutegadsen_backend.util.UserLoginRequestBody;
+import com.example.gutegadsen_backend.util.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -21,6 +19,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @RestController
@@ -95,6 +94,17 @@ public class GuteGadsenRestController {
         return ResponseEntity.created(uri).build();
     }
 
+    @GetMapping("/users/{username}/upvotes")
+    List<Long> findUpvotesOfUser(@PathVariable String username) throws UserNotFoundException {
+        User user = getUserByUsername(username);
+        return user
+                .getUpvoteList()
+                .stream()
+                .mapToLong(Post::getId)
+                .boxed()
+                .collect(Collectors.toList());
+    }
+
     @GetMapping("/posts/list")
     public List<Post> getAllPosts() {
         return postRepository.findAll();
@@ -124,6 +134,28 @@ public class GuteGadsenRestController {
                 .orElseThrow(() -> new PostNotFoundException(postId));
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/posts/upvote/{postId}")
+    public void changePostUpvoteState(@RequestBody UpvoteRequestBody body, @PathVariable Long postId) throws PostNotFoundException, UserNotFoundException {
+        Post post = postRepository
+                .findById(postId)
+                .orElseThrow(() -> new PostNotFoundException(postId));
+
+        User user = userRepository
+                .findById(body.username)
+                .orElseThrow(() -> new UserNotFoundException(body.username));
+
+        if(body.upvoteState) {
+            user.getUpvoteList().add(post);
+            post.getUpvoteList().add(user);
+        } else {
+            user.getUpvoteList().remove(post);
+            post.getUpvoteList().remove(user);
+        }
+        userRepository.save(user);
+        postRepository.save(post);
+    }
+
     @GetMapping("/tags")
     public List<String> getAllTags() {
         return tagRepository
@@ -137,8 +169,8 @@ public class GuteGadsenRestController {
     @PostMapping("/posts/create")
     public ResponseEntity<Post> createPost(@RequestBody PostCreationRequestBody body) throws UserNotFoundException {
         User user = userRepository
-                .findById(body.getUserName())
-                .orElseThrow(() -> new UserNotFoundException(body.getUserName()));
+                .findById(body.getUsername())
+                .orElseThrow(() -> new UserNotFoundException(body.getUsername()));
         Post newPost = new Post(body, user);
         imageRepository.save(newPost.getImage());
         Post savedPost = postRepository.save(newPost);

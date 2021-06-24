@@ -25,14 +25,16 @@ public class TestDataController {
         Image testImage = imageRepository.save(new Image(imageString));
         User testUser = userRepository.save(new User("Katzenfreund123", testImage));
 
-        postRepository.save(new Post("Ominöses bild", testUser, Set.of(testTag), testImage));
         postRepository.save(new Post("Katzer", testUser, Set.of(testTag), testImage));
-        postRepository.save(new Post("WÜder katz", testUser, Set.of(testTag), testImage));
-        postRepository.save(new Post("mieze", testUser, Set.of(testTag), testImage));
-        postRepository.save(new Post("matteo??!", testUser, Set.of(testTag), testImage));
-        postRepository.save(new Post("Oagheits viecherl", testUser, Set.of(testTag), testImage));
-        postRepository.save(new Post("tolles bild", testUser, Set.of(testTag), testImage));
-        postRepository.save(new Post(":D super toll", testUser, Set.of(testTag), testImage));
+
+        tagRepository.save(new Tag("Katze"));
+        tagRepository.save(new Tag("Kätzchen"));
+        tagRepository.save(new Tag("Lustig"));
+        tagRepository.save(new Tag("Schwarz"));
+        tagRepository.save(new Tag("Weiß"));
+        tagRepository.save(new Tag("Mehrfarbig"));
+        tagRepository.save(new Tag("Gestreift"));
+        tagRepository.save(new Tag("Orange"));
     }
 
 }

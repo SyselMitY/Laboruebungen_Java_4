@@ -17,7 +17,11 @@
 
       <a class="header-link header-button"> {{headerShown?"Menü schließen":"Menü öffnen"}} </a>
     </header>
-    <router-view v-on:login-event="fetchUsernameFromLS"/>
+
+
+    <router-view :loggedInUser="loggedInUser" v-on:login-event="fetchUsernameFromLS"/>
+
+
   </div>
 </template>
 
