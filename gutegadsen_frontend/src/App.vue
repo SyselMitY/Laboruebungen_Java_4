@@ -48,6 +48,7 @@ export default {
   },
   watch: {
     async loggedInUser(newUser) {
+      if(newUser.profilePictureId !== null)
       fetch(endpoints.api.images.id(newUser.profilePictureId))
           .then(response => response.json())
           .then(json => this.profilePicture = json.imageDataString)

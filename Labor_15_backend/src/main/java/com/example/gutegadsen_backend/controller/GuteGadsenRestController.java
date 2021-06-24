@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:8080")
+@CrossOrigin(origins = "https://gadsen.soisi.cf")
 public class GuteGadsenRestController {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
@@ -132,6 +132,16 @@ public class GuteGadsenRestController {
         return postRepository
                 .findById(postId)
                 .orElseThrow(() -> new PostNotFoundException(postId));
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/posts/delete/{postId}")
+    public void deletePostById(@PathVariable Long postId) throws PostNotFoundException {
+        Post toDelete = postRepository
+                .findById(postId)
+                .orElseThrow(() -> new PostNotFoundException(postId));
+
+        postRepository.delete(toDelete);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

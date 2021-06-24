@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig host="voip.soisi.cf" id="9f1cb97e-bd1e-49c1-9cf5-9ae173b0b2db" keyPath="X:\keys\test-server_key.ppk" port="22" nameFormat="DESCRIPTIVE" username="sossi" />
+    </configs>
+  </component>
+</project>

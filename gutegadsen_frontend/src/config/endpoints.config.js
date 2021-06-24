@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:10221"
+const baseUrl = "https://gadsenapi.soisi.cf"
 
 export default {
     api: {
@@ -6,7 +6,8 @@ export default {
         posts: {
             all: `${baseUrl}/posts/list/`,
             create: `${baseUrl}/posts/create/`,
-            upvote: (id) => `${baseUrl}/posts/upvote/${id}/`
+            upvote: (id) => `${baseUrl}/posts/upvote/${id}/`,
+            delete: (id) => `${baseUrl}/posts/delete/${id}/`,
         },
         images: {
             id: (id) => `${baseUrl}/images/${id}/`

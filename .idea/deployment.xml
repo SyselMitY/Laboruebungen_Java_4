@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="Azure-server" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="Azure-server">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/java-backends/gutegadsen" local="$PROJECT_DIR$/Labor_15_backend/target" />
+            <mapping deploy="/web/gutegadsen" local="$PROJECT_DIR$/gutegadsen_frontend/dist" web="https://gutegadsen.soisi.cf/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

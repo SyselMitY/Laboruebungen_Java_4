@@ -1,7 +1,7 @@
 <template>
   <div class="post-list">
     <div v-if="posts !== undefined" class="post-list-container">
-      <PostCard v-for="post in posts" @upvoteevent="getUpvoteList(loggedInUser)" :logged-in-user="loggedInUser" :upvoted="userUpvoteList.indexOf(post.id) !== -1" :key="post.id" :post="post"/>
+      <PostCard v-for="post in posts" @delete="deleteHander" @upvoteevent="getUpvoteList(loggedInUser)" :logged-in-user="loggedInUser" :upvoted="userUpvoteList.indexOf(post.id) !== -1" :key="post.id" :post="post"/>
     </div>
   </div>
 </template>
@@ -37,6 +37,9 @@ export default {
       fetch(endpoints.api.users.upvotes(user.username))
           .then(response => response.json())
           .then(json => this.userUpvoteList = json);
+    },
+    deleteHander(id) {
+      this.posts = this.posts.filter(post => post.id !== id);
     }
   }
 }

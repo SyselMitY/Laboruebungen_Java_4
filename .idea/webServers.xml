@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="7b3d270a-d681-40c2-ac0e-4c87b8e0b3fc" name="Azure-server">
+        <fileTransfer rootFolder="/home/sossi" accessType="SFTP" host="voip.soisi.cf" port="22" sshConfigId="9f1cb97e-bd1e-49c1-9cf5-9ae173b0b2db" sshConfig="sossi@voip.soisi.cf:22 key" keyPair="true">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

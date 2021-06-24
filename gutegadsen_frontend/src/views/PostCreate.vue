@@ -88,7 +88,8 @@ export default {
           "Content-Type": "application/json"
         }
       })
-      //TODO redirect to post list
+
+      this.$router.push("/posts");
     },
     removeTag(tag) {
       this.tags.push(tag)

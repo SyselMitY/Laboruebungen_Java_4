@@ -9,7 +9,7 @@
         <span>Gepostet am {{ post.date }}</span>
         <span class="post-card-username">{{ post.user.username }}</span>
         <b-avatar class="post-card-avatar" :src="avatarData"></b-avatar>
-        <b-button variant="danger" v-if="ableToDelete">Löschen</b-button>
+        <b-button variant="danger" @click="deleteThisPost" v-if="ableToDelete">Löschen</b-button>
       </div>
     </template>
 
@@ -70,6 +70,12 @@ export default {
       this.$emit("upvoteevent");
       this.post.upvoteCount += requestBody.upvoteState?1:-1;
     },
+    async deleteThisPost() {
+      await fetch(endpoints.api.posts.delete(this.post.id), {
+        method: "DELETE"
+      });
+      this.$emit("delete", this.post.id);
+    }
   }
 }
 </script>
